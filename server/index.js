@@ -1,21 +1,22 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import db from "./config/Database.js";
+import router from "./routes/index.js";
+dotenv.config();
 const app = express();
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
-app.use(cors(corsOptions));
-// parse requests of content-type - application/json
+
+try {
+    await db.authenticate();
+    console.log('Database Connected...');
+} catch (error) {
+    console.error(error);
+}
+
+app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+app.use(cookieParser());
 app.use(express.json());
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Sandrine Coupart API." });
-});
-require("./app/routes/user.routes.js")(app);
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+app.use(router);
+
+app.listen(5000, ()=> console.log('Server running at port 5000'));
