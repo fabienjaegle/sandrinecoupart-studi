@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ message: "Sandrine Coupart API." });
 });
-require("./app/routes/entity.routes.js")(app);
+require("./app/routes/user.routes.js")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
