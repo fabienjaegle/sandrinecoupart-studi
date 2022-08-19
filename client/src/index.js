@@ -1,6 +1,5 @@
 import React, {StrictMode} from 'react';
 import App from './App';
-import "bulma/css/bulma.css";
 import axios from "axios";
 import {createRoot} from 'react-dom/client';
 axios.defaults.withCredentials = true;
