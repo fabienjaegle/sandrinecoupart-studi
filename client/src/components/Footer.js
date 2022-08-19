@@ -40,8 +40,8 @@ const Footer = () => {
                                         <h3 className="footer-widget-title">Liens utiles</h3>
 
                                         <ul className="widget-link">
-                                            <li><a href="#">Politique de confidentialité</a></li>
-                                            <li><a href="#">Mentions légales</a></li>
+                                            <li><a href="/private-policy">Politique de confidentialité</a></li>
+                                            <li><a href="/terms">Mentions légales</a></li>
                                             <li><a href="#services">Mes services</a></li>
                                             <li><a href="#about">A propos</a></li>
                                             <li><a href="#">Les ateliers</a></li>
@@ -77,9 +77,8 @@ const Footer = () => {
                         </div>
 
                         <div className="copyright-link">
-                            <a href="/">Mentions légales</a>
-                            <a href="/">Politique de confidentialité</a>
-                            <a href="/">Sitemap</a>
+                            <a href="/terms">Mentions légales</a>
+                            <a href="/private-policy">Politique de confidentialité</a>
                         </div>
                     </div>
                 </div>

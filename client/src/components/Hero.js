@@ -11,7 +11,7 @@ const Hero = () => {
                             <h6 className="sub-title">Diététicienne nutritionniste</h6>
                             <h1 className="main-title">"Que votre alimentation soit votre première médecine"</h1>
                             <p>Hippocrate</p>
-                            <a href="#" className="btn btn-primary btn-hover-secondary">Start Course</a>
+                            <a href="#services" className="btn btn-primary btn-hover-secondary">Mes services</a>
                         </div>
                     </div>
 

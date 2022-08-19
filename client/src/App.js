@@ -4,6 +4,7 @@ import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import Recipes from "./components/pages/Recipes";
+import Contact from "./components/pages/Contact";
 
 function App() {
   return (
@@ -11,9 +12,12 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="/recipes" element={<Recipes />}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/terms" element={<Home />}></Route>
+        <Route path="/private-policy" element={<Home />}></Route>
       </Routes>
     </BrowserRouter>
   );
