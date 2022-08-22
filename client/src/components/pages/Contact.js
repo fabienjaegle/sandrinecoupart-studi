@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../Header";
 import Breadcrumb from "../Breadcrumb";
+import ContactForm from "../ContactForm";
 import Footer from "../Footer";
 
 class Contact extends React.Component {
@@ -17,7 +18,7 @@ class Contact extends React.Component {
             <>
             <Header />
             <Breadcrumb title={data} />
-
+            <ContactForm />
             <Footer />
             </>
         )
