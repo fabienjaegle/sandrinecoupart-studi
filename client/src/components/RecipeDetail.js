@@ -1,5 +1,7 @@
 import React from "react";
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+  import { faMortarPestle, faFireBurner, faBed } from '@fortawesome/free-solid-svg-icons'
 
 class RecipeDetail extends React.Component {
     constructor(props) {
@@ -41,8 +43,10 @@ class RecipeDetail extends React.Component {
                             <div className="col-lg-8">
                                 <div className="courses-details">
                                     <div className="courses-details-images">
-                                        <img src={`${item.featuredImage}`} alt={item.title} />
-                                        <span className="tags">Finance</span>
+                                        <img src={`/${item.featuredImage}`} alt={item.title} />
+                                        {item.categories.map((category) => (
+                                            <span key={category.id} className="tags">{category.category}</span>
+                                        ))}
                                     </div>
 
                                     <h2 className="title">{item.title}</h2>
@@ -53,7 +57,6 @@ class RecipeDetail extends React.Component {
                                             <span className="rating-star">
                                             <span className="rating-bar" style={{width: 80 + '%'}}></span>
                                             </span>
-                                            <span className="rating-text">(5,764 Rating)</span>
                                         </div>
                                     </div>
 
@@ -237,16 +240,13 @@ class RecipeDetail extends React.Component {
                                 <div className="sidebar">
                                     <div className="sidebar-widget widget-information">
                                         <div className="info-price">
-                                            <span className="price">$420.38</span>
+                                            <span className="price">Détails</span>
                                         </div>
                                         <div className="info-list">
                                             <ul>
-                                                <li><i className="icofont-man-in-glasses"></i> <strong>Instructor</strong> <span>Pamela Foster</span></li>
-                                                <li><i className="icofont-clock-time"></i> <strong>Duration</strong> <span>08 hr 15 mins</span></li>
-                                                <li><i className="icofont-ui-video-play"></i> <strong>Lectures</strong> <span>29</span></li>
-                                                <li><i className="icofont-bars"></i> <strong>Level</strong> <span>Secondary</span></li>
-                                                <li><i className="icofont-book-alt"></i> <strong>Language</strong> <span>English</span></li>
-                                                <li><i className="icofont-certificate-alt-1"></i> <strong>Certificate</strong> <span>Yes</span></li>
+                                                <li><FontAwesomeIcon icon={faMortarPestle} /> <strong>Temps de préparation (en min)</strong> <span>{item.prepTimeInMinutes}</span></li>
+                                                <li><FontAwesomeIcon icon={faFireBurner} /> <strong>Temps de cuisson (en min)</strong> <span>{item.cookTimeInMinutes}</span></li>
+                                                <li><FontAwesomeIcon icon={faBed} /> <strong>Temps de repos (en min)</strong> <span>{item.restTimeInMinutes}</span></li>
                                             </ul>
                                         </div>
                                     </div>
