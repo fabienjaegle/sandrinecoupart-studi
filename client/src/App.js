@@ -5,6 +5,8 @@ import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import Recipes from "./components/pages/Recipes";
 import Contact from "./components/pages/Contact";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
   return (
