@@ -6,10 +6,14 @@ import Diets from "../models/DietModel.js";
 export const getExcerptPublicRecipies = async(req, res) => {
     try {
         const recipes = await Recipes.findAll({
-            attributes:['id', 'title', 'featuredImage', 'publishedDate'],
+            attributes:['id', 'title', 'featuredImage', 'prepTimeInMinutes', 'cookTimeInMinutes', 'publishedDate'],
             where: {
                 forPatient: false
-            }
+            },
+            order: [
+                ['id', 'DESC']
+            ],
+            limit: 6
         });
         res.json(recipes);
     } catch (error) {

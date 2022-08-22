@@ -17,19 +17,19 @@ const Header = () => {
                         </div>
                         <div className="header-menu d-none d-lg-flex">
                             <ul className="nav-menu">
-                                <li><NavLink to='/' activeClassName="active">Accueil</NavLink></li>
-                                <li><NavLink to='/recipes' activeClassName="active">Mes recettes</NavLink></li>
-                                <li><NavLink to='/contact' activeClassName="active">Me contacter</NavLink></li>
+                                <li><NavLink to='/' activeclassname="active">Accueil</NavLink></li>
+                                <li><NavLink to='/recipes' activeclassname="active">Mes recettes</NavLink></li>
+                                <li><NavLink to='/contact' activeclassname="active">Me contacter</NavLink></li>
                             </ul>
 
                             <div className="header-btn">
-                                <a className="btn btn-secondary btn-hover-primary" href="/login">Se connecter</a>
+                                <NavLink to='/login' className="btn btn-secondary btn-hover-primary">Se connecter</NavLink>
                             </div>
                         </div>
 
                         <div className="header-toggle d-lg-none">
 
-                            <a className="btn btn-secondary btn-hover-primary" href="/login">Se connecter</a>
+                            <NavLink to='/login' className="btn btn-secondary btn-hover-primary">Se connecter</NavLink>
                             <NavLink to={'#'} className="menu-toggle" onClick={handleNavCollapse}>
                                 <span></span>
                                 <span></span>
@@ -47,9 +47,9 @@ const Header = () => {
 
             <div className="mobile-menu-items">
                 <ul className="nav-menu">
-                    <li><NavLink to='/' activeClassName="active">Accueil</NavLink></li>
-                    <li><NavLink to='/recipes' activeClassName="active">Mes recettes</NavLink></li>
-                    <li><NavLink to='/contact' activeClassName="active">Me contacter</NavLink></li>
+                    <li><NavLink to='/' activeclassname="active">Accueil</NavLink></li>
+                    <li><NavLink to='/recipes' activeclassname="active">Mes recettes</NavLink></li>
+                    <li><NavLink to='/contact' activeclassname="active">Me contacter</NavLink></li>
                 </ul>
             </div>
         </div>
