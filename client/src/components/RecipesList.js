@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+  import { faSeedling, faMortarPestle, faFireBurner } from '@fortawesome/free-solid-svg-icons'
 
 class RecipesList extends React.Component {
     constructor(props) {
@@ -44,13 +46,13 @@ class RecipesList extends React.Component {
                                         </div>
                                         <div className="courses-content">
                                             <div className="courses-price">
-                                                <span className="price"><i className="fa-solid fa-seedling"></i></span>
+                                                <span className="price"><FontAwesomeIcon icon={faSeedling} /></span>
                                             </div>
                                             <div className="content-wrapper">
                                                 <h4 className="title"><a href={`/recipe/${item.id}`}>{item.title}</a></h4>
                                                 <ul className="meta">
-                                                    <li><i className="fa-solid fa-mortar-pestle"></i> {item.prepTimeInMinutes} min</li>
-                                                    <li><i className="fa-solid fa-oven"></i> {item.cookTimeInMinutes} min</li>
+                                                    <li><FontAwesomeIcon icon={faMortarPestle} /> {item.prepTimeInMinutes} min</li>
+                                                    <li><FontAwesomeIcon icon={faFireBurner} /> {item.cookTimeInMinutes} min</li>
                                                 </ul>
                                             </div>
                                         </div>
