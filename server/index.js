@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import db from "./config/Database.js";
 import router from "./routes/index.js";
+import bodyparser from 'body-parser';
 dotenv.config();
 const app = express();
 
@@ -16,6 +17,8 @@ try {
 
 app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
 app.use(cookieParser());
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(router);
 
