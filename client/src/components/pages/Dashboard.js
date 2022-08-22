@@ -59,10 +59,21 @@ const Dashboard = () => {
         setUsers(response.data);
     }
 
+    const logout = async () => {
+        axiosJWT.delete('http://localhost:5000/logout', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        setToken(null);
+        navigate("/");
+    }
+
     return (
         <div className="container mt-5">
             <h1>Welcome Back: {lastname} {firstname}</h1>
             <button onClick={getUsers} className="button is-info">Get Users</button>
+            <button onClick={logout} className="button is-info">Logout</button>
             <table className="table is-striped is-fullwidth">
                 <thead>
                     <tr>
