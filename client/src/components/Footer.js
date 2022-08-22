@@ -6,7 +6,7 @@ class Footer extends React.Component {
    
         this.state = {
             items: [],
-            DataisLoaded: false
+            DataIsLoaded: false
         };
     }
 
@@ -16,14 +16,12 @@ class Footer extends React.Component {
             .then((json) => {
                 this.setState({
                     items: json,
-                    DataisLoaded: true
+                    DataIsLoaded: true
                 });
             })
     }
     render() {
-        const { DataisLoaded, items } = this.state;
-        if (!DataisLoaded) return <div>
-            <h1> Chargement des dernières recettes en cours...</h1> </div> ;
+        const { DataIsLoaded, items } = this.state;
 
         return (
             <>
@@ -51,15 +49,19 @@ class Footer extends React.Component {
                                 <div className="col-lg-8">
                                     <div className="widget-wrapper">
                                         <div className="footer-widget">
-                                            <h3 className="footer-widget-title">Dernières recettes</h3>
+                                            {!DataIsLoaded ? <h3 className="footer-widget-title">Chargement en cours...</h3> : 
+                                            <>
+                                                <h3 className="footer-widget-title">Dernières recettes</h3>
 
-                                            <ul className="widget-link">
-                                                {
-                                                    items.map((item) => ( 
-                                                    <li key={item.id}><a href={`/recipe/${item.id}`}>{ item.title }</a></li>
-                                                    ))
-                                                }
-                                            </ul>
+                                                <ul className="widget-link">
+                                                    {
+                                                        items.map((item) => ( 
+                                                            <li key={item.id}><a href={`/recipe/${item.id}`}>{ item.title }</a></li>
+                                                        ))
+                                                    }
+                                                </ul>
+                                            </>
+                                            }
                                         </div>
                                         <div className="footer-widget">
                                             <h3 className="footer-widget-title">Liens utiles</h3>
@@ -78,7 +80,6 @@ class Footer extends React.Component {
                                             <ul className="widget-link">
                                                 <li>Lun-Ven : 9h – 18h</li>
                                                 <li>Sam : 9h – 13h</li>
-                                                <li>Sunday: Fermé</li>
                                             </ul>
 
                                             <div className="widget-location">

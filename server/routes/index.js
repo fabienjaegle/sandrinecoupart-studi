@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/users', verifyToken, getUsers);
 router.post('/users', Register);
 router.get('/recipes/public/excerpt', getExcerptPublicRecipies);
-router.post('/recipes/public/full', getFullPublicRecipe);
+router.get('/recipes/public/full', getFullPublicRecipe);
 router.post('/login', Login);
 router.get('/token', refreshToken);
 router.delete('/logout', Logout);
