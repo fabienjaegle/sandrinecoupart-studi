@@ -1,3 +1,6 @@
+import { faLightbulb, faHandshake, faFileLines } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const Services = () => {
     return (
         <div id="services" className="section section-padding">
@@ -10,7 +13,7 @@ const Services = () => {
                     <div className="col-lg-4 col-md-6">
                         <div className="single-feature">
                             <div className="feature-icon">
-                                <span><i className="flaticon-lunges"></i></span>
+                                <span><FontAwesomeIcon icon={faFileLines} /></span>
                             </div>
                             <div className="feature-content">
                                 <div className="content-wrapper">
@@ -23,7 +26,7 @@ const Services = () => {
                     <div className="col-lg-4 col-md-6">
                         <div className="single-feature">
                             <div className="feature-icon">
-                                <span><i className="flaticon-lotus"></i></span>
+                                <span><FontAwesomeIcon icon={faHandshake} /></span>
                             </div>
                             <div className="feature-content">
                                 <div className="content-wrapper">
@@ -36,7 +39,7 @@ const Services = () => {
                     <div className="col-lg-4 col-md-6">
                         <div className="single-feature">
                             <div className="feature-icon">
-                                <span><i className="flaticon-computer"></i></span>
+                                <span><FontAwesomeIcon icon={faLightbulb} /></span>
                             </div>
                             <div className="feature-content">
                                 <div className="content-wrapper">

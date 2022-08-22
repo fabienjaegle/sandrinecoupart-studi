@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import './Hero.css'
 
 const Hero = () => {
@@ -20,10 +22,10 @@ const Hero = () => {
                             <div className="social-wrapper">
                                 <p>Me suivre sur les réseaux sociaux :</p>
                                 <ul className="social">
-                                    <li><a href="/"><i className="icofont-facebook"></i></a></li>
-                                    <li><a href="/"><i className="icofont-skype"></i></a></li>
-                                    <li><a href="/"><i className="icofont-twitter"></i></a></li>
-                                    <li><a href="/"><i className="icofont-linkedin"></i></a></li>
+                                    <li><a href="/"><FontAwesomeIcon icon={faTwitter} /></a></li>
+                                    <li><a href="/"><FontAwesomeIcon icon={faFacebook} /></a></li>
+                                    <li><a href="/"><FontAwesomeIcon icon={faInstagram} /></a></li>
+                                    <li><a href="/"><FontAwesomeIcon icon={faLinkedin} /></a></li>
                                 </ul>
                             </div>
                         </div>
