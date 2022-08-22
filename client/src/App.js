@@ -4,6 +4,7 @@ import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import Recipes from "./components/pages/Recipes";
+import Recipe from "./components/pages/Recipe";
 import Contact from "./components/pages/Contact";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="/recipes" element={<Recipes />}></Route>
+        <Route path="/recipe/:id" element={<Recipe /> }></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
