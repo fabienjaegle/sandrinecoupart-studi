@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
   import { faSeedling, faMortarPestle, faFireBurner } from '@fortawesome/free-solid-svg-icons'
 
@@ -13,22 +14,30 @@ class RecipesList extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/recipes/public/excerpt")
-            .then((res) => res.json())
+        try {
+            axios.post('http://localhost:5000/recipes/public/excerpt', {
+                recipeid: this.state.recipeId
+            })
+            .then((res) => res.data)
             .then((json) => {
                 this.setState({
                     items: json,
-                    DataisLoaded: true
+                    DataIsLoaded: true
                 });
-            })
+            });
+        } catch (error) {
+            if (error.response) {
+                //setMsg(error.response.data.msg);
+            }
+        }
     }
     render() {
-        const { DataisLoaded, items } = this.state;
-        if (!DataisLoaded) return <div>
-            <p> Chargement des recettes en cours...</p> </div> ;
+        const { DataIsLoaded, items } = this.state;
+        if (!DataIsLoaded) return <div>
+            <p>Chargement des recettes en cours...</p> </div> ;
 
         return (
-            <div className="section section-padding bg-grey">
+            <div className="section pt-4 bg-grey">
                 <div className="container">
                     <div className="section-title">
                         <h6 className="sub-title">Recettes santé</h6>

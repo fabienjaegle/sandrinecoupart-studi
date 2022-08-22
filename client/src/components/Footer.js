@@ -1,4 +1,5 @@
 import React from "react"
+import axios from 'axios';
 
 class Footer extends React.Component {
     constructor(props) {
@@ -11,14 +12,22 @@ class Footer extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/recipes/public/excerpt")
-            .then((res) => res.json())
+        try {
+            axios.post('http://localhost:5000/recipes/public/excerpt', {
+                recipeid: this.state.recipeId
+            })
+            .then((res) => res.data)
             .then((json) => {
                 this.setState({
                     items: json,
                     DataIsLoaded: true
                 });
-            })
+            });
+        } catch (error) {
+            if (error.response) {
+                //setMsg(error.response.data.msg);
+            }
+        }
     }
     render() {
         const { DataIsLoaded, items } = this.state;
