@@ -7,6 +7,7 @@ import Recipe from "./components/pages/Recipe";
 import Contact from "./components/pages/Contact";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import './IcoFont.css';
 
 function App() {
   return (
