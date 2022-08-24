@@ -17,7 +17,7 @@ function Recipe(props) {
         }).then((response) => {
             setRecipe(response.data);
         });
-    });
+    }, [id]);
 
     if (!recipe) return null;
 
