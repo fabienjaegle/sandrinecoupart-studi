@@ -3,6 +3,7 @@ import db from "../config/Database.js";
 import Allergens from "./AllergenModel.js";
 import Categories from "./CategoryModel.js";
 import Diets from "./DietModel.js";
+import Reviews from "./ReviewModel.js";
 
 const { DataTypes } = Sequelize;
 
@@ -66,5 +67,8 @@ const RecipeDiet = db.define('Diet_Recipe', {}, {
 
 Recipes.belongsToMany(Diets, { through: RecipeDiet });
 Diets.belongsToMany(Recipes, { through: RecipeDiet });
+
+Reviews.belongsTo(Recipes);
+Recipes.hasMany(Reviews);
 
 export default Recipes;

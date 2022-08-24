@@ -2,6 +2,7 @@ import Recipes from "../models/RecipeModel.js";
 import Allergens from "../models/AllergenModel.js";
 import Categories from "../models/CategoryModel.js";
 import Diets from "../models/DietModel.js";
+import Reviews from "../models/ReviewModel.js";
 
 export const getExcerptPublicRecipies = async(req, res) => {
     try {
@@ -34,6 +35,8 @@ export const getFullPublicRecipe = async(req, res) => {
             }, {
                 model: Diets,
                 trough: { attributes: []}
+            }, {
+                model: Reviews
             }],
             where: {
                 id: recipeid,
