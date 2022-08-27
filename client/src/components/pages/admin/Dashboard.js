@@ -60,11 +60,11 @@ const Dashboard = () => {
     }
 
     const createPatient = async () => {
-        navigate("/createPatient");
+        navigate("/dashboard/createPatient");
     }
 
     const createRecipe = async () => {
-        navigate("/createRecipe");
+        navigate("/dashboard/createRecipe");
     }
 
 
@@ -88,7 +88,7 @@ const Dashboard = () => {
             <table className="table is-striped is-fullwidth">
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th>Id</th>
                         <th>Lastname</th>
                         <th>Firstname</th>
                         <th>Is Patient</th>
