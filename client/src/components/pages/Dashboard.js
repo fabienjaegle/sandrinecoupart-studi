@@ -41,7 +41,7 @@ const Dashboard = () => {
             config.headers.Authorization = `Bearer ${response.data.accessToken}`;
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
-            setLastname(decoded.name);
+            setLastname(decoded.lastname);
             setFirstname(decoded.firstname);
             setExpire(decoded.exp);
         }
@@ -80,7 +80,7 @@ const Dashboard = () => {
                         <th>No</th>
                         <th>Lastname</th>
                         <th>Firstname</th>
-                        <th>Email</th>
+                        <th>Is Patient</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,7 +89,7 @@ const Dashboard = () => {
                             <td>{index + 1}</td>
                             <td>{user.lastname}</td>
                             <td>{user.firstname}</td>
-                            <td>{user.email}</td>
+                            <td>{user.isPatient ? 'Yes' : 'No'}</td>
                         </tr>
                     ))}
 

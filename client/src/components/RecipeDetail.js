@@ -1,18 +1,25 @@
 import React, {useState} from "react";
+import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-  import { faMortarPestle, faFireBurner, faBed } from '@fortawesome/free-solid-svg-icons'
+import { faMortarPestle, faFireBurner, faBed } from '@fortawesome/free-solid-svg-icons'
+import $ from 'jquery'
 
 const RecipeDetail = (props) => {
     const [activeTab, setActiveTab] = useState("directions");
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const handleTabDirections = () => {
         setActiveTab("directions");
-      };
-      const handleTabReviews = () => {
+    };
+    const handleTabReviews = () => {
         setActiveTab("reviews");
-      };
-        const item = props.recipe;
+    };
+    
+    const item = props.recipe;
 
-        return (
+    return (
         <div className="section pt-4">
             <div className="container pb-4">   
                 <div className="courses-details-wrapper">
@@ -76,9 +83,51 @@ const RecipeDetail = (props) => {
                                                     }
 
                                                     <div className="reviews-btn">
-                                                        <button type="button" className="btn btn-dark btn-hover-primary" data-bs-toggle="modal" data-bs-target="#reviewsModal">Ecrire un avis</button>
+                                                        <button type="button" className="btn btn-dark btn-hover-primary" onClick={handleShow}>Ecrire un avis</button>
                                                     </div>
-
+                                                    <Modal show={show} onHide={handleClose}>
+                                                        <Modal.Header closeButton>
+                                                            <Modal.Title>Ajouter un avis</Modal.Title>
+                                                        </Modal.Header>
+                                                        <Modal.Body>
+                                                        <form action="#">
+                                                            <div className="row">
+                                                                <div className="col-md-6">
+                                                                    <div className="single-form">
+                                                                        <input type="text" placeholder="Entrez votre nom" />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-md-6">
+                                                                    <div className="reviews-rating">
+                                                                        <label>Votre note</label>
+                                                                        <ul id="rating" className="rating">
+                                                                            <li className="star" title="Horrible" data-value="1"><i className="icofont-star"></i></li>
+                                                                            <li className="star" title="Pas bon" data-value="2"><i className="icofont-star"></i></li>
+                                                                            <li className="star" title="Moyen" data-value="3"><i className="icofont-star"></i></li>
+                                                                            <li className="star" title="Très bon" data-value="4"><i className="icofont-star"></i></li>
+                                                                            <li className="star" title="Excellent" data-value="5"><i className="icofont-star"></i></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-md-12">
+                                                                    <div className="single-form">
+                                                                        <textarea placeholder="Ecrivez votre commentaire ici"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-md-12">
+                                                                    <div className="single-form">
+                                                                        <button className="btn btn-dark btn-hover-primary">Envoyer</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                        <Button variant="secondary" onClick={handleClose}>
+                                                            Fermer
+                                                        </Button>
+                                                        </Modal.Footer>
+                                                    </Modal>
                                                     {/*<div className="modal fade" id="reviewsModal">
                                                         <div className="modal-dialog modal-dialog-centered">
                                                             <div className="modal-content">

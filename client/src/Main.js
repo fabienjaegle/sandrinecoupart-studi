@@ -1,5 +1,4 @@
-(function ($) {
-    "use strict";
+import $ from 'jquery';
 
 
 	/*--
@@ -69,53 +68,11 @@
 
 
     /*--
-        Slider
-    -----------------------------------*/
-    var slider = new Swiper('.slider-active .swiper-container', {
-        speed: 600,
-        effect: "fade",
-        loop: true,
-        pagination: {
-            el: '.slider-active .swiper-pagination',
-            clickable: true,
-        },
-        // navigation: {
-        //     nextEl: ".slider-active .swiper-button-next",
-        //     prevEl: ".slider-active .swiper-button-prev",
-        // },
-        autoplay: {
-            delay: 8000,
-        },
-    });
-
-
-    /*--
-        Magnific Popup Activation
-    -----------------------------------*/
-    $('.video-popup').magnificPopup({
-        type: 'iframe'
-        // other options
-    });
-
-    $('.image-popup').magnificPopup({
-        type: 'image',
-        gallery:{
-          enabled:true
-        }
-    });
-	
-	
-	/*--
-		Back to top Script
-	-----------------------------------*/
-    $('select').niceSelect();
-
-
-    /*--
 		Rating Script
 	-----------------------------------*/
 
 	$("#rating li").on('mouseover', function(){
+        console.log('mouseover');
 		var onStar = parseInt($(this).data('value'), 10);
 		var siblings = $(this).parent().children('li.star');
 		Array.from(siblings, function(item){
@@ -130,6 +87,7 @@
 	})
 
 	$("#rating").on('mouseleave', function(){
+        console.log('mouseleave');
 		var child = $(this).find('li.star i');
 		Array.from(child, function(item){
 			item.classList.remove('hover');
@@ -138,6 +96,7 @@
 
 	
 	$('#rating li').on('click', function(e) {
+        console.log('mouseclick');
 		var onStar = parseInt($(this).data('value'), 10);
 		var siblings = $(this).parent().children('li.star');
 		Array.from(siblings, function(item){
@@ -166,13 +125,11 @@
         }
     });
 
-    //Animate the scroll to yop
+    //Animate the scroll to top
     $('.back-to-top').on('click', function (event) {
-    event.preventDefault();
+        event.preventDefault();
 
         $('html, body').animate({
             scrollTop: 0,
         }, 1500);
     });
-    
-})(jQuery);
