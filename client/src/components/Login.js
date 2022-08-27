@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -11,11 +12,11 @@ const Login = () => {
     const Auth = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/login', {
-                username: username,
-                password: password
+            await AuthService.login(username, password)
+            .then((result) => {
+                navigate("/dashboard");
             });
-            navigate("/dashboard");
+            
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);
@@ -30,12 +31,12 @@ const Login = () => {
             <div className="row">
                 <div className="col-md-6">
                     <div className="single-form">
-                        <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     </div>
                 </div>
                 <div className="col-md-6">
                     <div className="single-form">
-                        <input type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                 </div>
                 <div className="col-md-12 pt-4">

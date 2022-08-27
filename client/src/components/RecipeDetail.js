@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMortarPestle, faFireBurner, faBed } from '@fortawesome/free-solid-svg-icons'
-import $ from 'jquery'
 
 const RecipeDetail = (props) => {
     const [activeTab, setActiveTab] = useState("directions");
