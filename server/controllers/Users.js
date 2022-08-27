@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export const getUsers = async(req, res) => {
     try {
         const users = await Users.findAll({
-            attributes:['id','lastname', 'firstname', 'username', 'email']
+            attributes:['id','lastname', 'firstname', 'username', 'isPatient']
         });
         res.json(users);
     } catch (error) {
@@ -48,11 +48,11 @@ export const Login = async(req, res) => {
         const accessToken = jwt.sign({userId, lastname, firstname, email}, process.env.ACCESS_TOKEN_SECRET,{
             expiresIn: '20s'
         });
-        console.log(accessToken);
+
         const refreshToken = jwt.sign({userId, lastname, firstname, email}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn: '1d'
         });
-        console.log(refreshToken);
+
         await Users.update({refresh_token: refreshToken}, {
             where:{
                 id: userId
@@ -62,7 +62,7 @@ export const Login = async(req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
         });
-        res.json({ accessToken });
+        res.json({ accessToken, lastname, firstname });
     } catch (error) {
         res.status(404).json({msg:"Utilisateur introuvable"});
     }
