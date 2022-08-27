@@ -59,6 +59,15 @@ const Dashboard = () => {
         setUsers(response.data);
     }
 
+    const createPatient = async () => {
+        navigate("/createPatient");
+    }
+
+    const createRecipe = async () => {
+        navigate("/createRecipe");
+    }
+
+
     const logout = async () => {
         axiosJWT.delete('http://localhost:5000/logout', {
             headers: {
@@ -66,14 +75,16 @@ const Dashboard = () => {
             }
         })
         setToken(null);
+        localStorage.removeItem("user");
         navigate("/");
     }
 
     return (
         <div className="container mt-5">
-            <h1>Welcome Back: {lastname} {firstname}</h1>
-            <button onClick={getUsers} className="button is-info">Get Users</button>
-            <button onClick={logout} className="button is-info">Logout</button>
+            <h1>Bonjour, {lastname} {firstname}</h1>
+            <button onClick={createPatient} className="button is-info">Créer un patient</button>
+            <button onClick={createRecipe} className="button is-info">Créer une recette</button>
+            <button onClick={logout} className="button is-info">Se déconnecter</button>
             <table className="table is-striped is-fullwidth">
                 <thead>
                     <tr>
