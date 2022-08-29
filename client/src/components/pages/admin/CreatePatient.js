@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import {Formik, Field, FieldArray, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import "bootstrap/dist/css/bootstrap.css";
+import UserService from "../../../services/user.service";
 
 const CreatePatient = () => {
   const validationSchema = Yup.object({
@@ -15,7 +17,7 @@ const CreatePatient = () => {
     password: Yup
       .string()
       .required('Veuillez entrer un mot de passe'),
-    confirmPassword: Yup
+      confPassword: Yup
       .string()
       .required('Veuillez confirmer le mot de passe')
       .oneOf([Yup.ref("password"), null], "Les mots de passe doivent correspondre"),
@@ -27,35 +29,60 @@ const CreatePatient = () => {
     email : "",
     username: "",
     password: "",
-    confirmPassword : "",
-    allergens: []
+    confPassword : "",
+    allergens: [],
+    diets: []
   };
 
-  const handleSubmit = (values) => {
-    console.log(values)
-  };
+  const [allergens, setAllergens] = useState([]);
+  const [diets, setDiets] = useState([]);
+  const [info, setInfo] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const [allergens, setAllergens] = useState([])
-
-  const fetchData = () => {
-    fetch('http://localhost:5000/allergens')
+  useEffect(() => {
+    fetchAllergensData();
+    fetchDietsData();
+  }, [])
+  const fetchAllergensData = () => {
+    UserService.getAllergens()
       .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        setAllergens(data)
+        setAllergens(response.data);
       })
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  const fetchDietsData = () => {
+    UserService.getDiets()
+      .then(response => {
+        setDiets(response.data);
+      })
+  }
+
+  const handleSubmit = (values) => {
+    UserService.postNewUser(values).then(response => {
+      if (response.status === 200) {
+        setInfo(response.data.msg);
+      }else {
+        setError(response.data.msg);
+      }
+    });
+  };
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 pt-3">
           <h1 className="text-center">Créer un patient</h1>
+          {info ? 
+            <div class="alert alert-success" role="alert">
+              {info}
+            </div> : ''
+          }
+          {error ? 
+            <div class="alert alert-danger" role="alert">
+              {error}
+            </div> : ''
+          }
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values) => handleSubmit(values)}>
             {({ resetForm, values }) => (
               <Form>
@@ -85,39 +112,70 @@ const CreatePatient = () => {
                   <ErrorMessage name="password" component="small" className="text-danger" />
                 </div>
                 <div className="form-group mb-3">
-                  <label htmlFor="confirmPassword">Confirmer le mot de passe :</label>
-                  <Field type="password" id="confirmPassword" name="confirmPassword" className="form-control" />
-                  <ErrorMessage name="confirmPassword" component="small" className="text-danger" />
+                  <label htmlFor="confPassword">Confirmer le mot de passe :</label>
+                  <Field type="password" id="confPassword" name="confPassword" className="form-control" />
+                  <ErrorMessage name="confPassword" component="small" className="text-danger" />
                 </div>
                 <div className="form-group mb-3">
-                  <label htmlFor="confirmPassword">Allergies :</label>
-                    <FieldArray
-                      name="allergens"
-                      render={arrayHelpers => (
-                        <div>
-                          {allergens.map(allergen => (
-                            <label key={allergen.id}>
-                              <input
-                                name="allergens"
-                                type="checkbox"
-                                value={allergen}
-                                checked={values.allergens.includes(allergen.allergen)}
-                                onChange={e => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(allergen.allergen);
-                                  } else {
-                                    const idx = values.allergens.indexOf(allergen.allergen);
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              <span>{allergen.allergen}</span>
-                            </label>
-                          ))}
-                        </div>
-                      )}
-                    />
-                    <ErrorMessage name="allergens" component="small" className="text-danger" />
+                  <label htmlFor="allergens">Allergies :</label>
+                  <FieldArray
+                    name="allergens"
+                    render={arrayHelpers => (
+                      <div>
+                        {allergens.map(allergen => (
+                          <label key={allergen.id}>
+                            <input
+                              name="allergens"
+                              type="checkbox"
+                              value={allergen}
+                              checked={values.allergens.includes(allergen.id)}
+                              onChange={e => {
+                                if (e.target.checked) {
+                                  arrayHelpers.push(allergen.id);
+                                } else {
+                                  const idx = values.allergens.indexOf(allergen.id);
+                                  arrayHelpers.remove(idx);
+                                }
+                              }}
+                            />
+                            <span>{allergen.allergen}</span>
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  />
+                  <ErrorMessage name="allergens" component="small" className="text-danger" />
+                </div>
+
+                <div className="form-group mb-3">
+                  <label htmlFor="diets">Régimes :</label>
+                  <FieldArray
+                    name="diets"
+                    render={arrayHelpers => (
+                      <div>
+                        {diets.map(diet => (
+                          <label key={diet.id}>
+                            <input
+                              name="diets"
+                              type="checkbox"
+                              value={diet}
+                              checked={values.diets.includes(diet.id)}
+                              onChange={e => {
+                                if (e.target.checked) {
+                                  arrayHelpers.push(diet.id);
+                                } else {
+                                  const idx = values.diets.indexOf(diet.id);
+                                  arrayHelpers.remove(idx);
+                                }
+                              }}
+                            />
+                            <span>{diet.diet}</span>
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  />
+                  <ErrorMessage name="diets" component="small" className="text-danger" />
                   </div>
                   
                   <div className="form-group d-flex justify-content-end gap-3 mb-3">

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Modal, Button } from "react-bootstrap";
 import Login from './Login';
-import AuthService from '../services/AuthService';
+import AuthService from '../services/auth.service';
 
 class Header extends React.Component {
     constructor(props) {

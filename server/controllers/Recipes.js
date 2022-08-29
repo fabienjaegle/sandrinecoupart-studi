@@ -48,3 +48,27 @@ export const getFullPublicRecipe = async(req, res) => {
         console.log(error);
     }
 }
+
+export const postNewRecipes = async(req, res) => {
+    const { title, featuredImage, description, ingredients, directions, prepTimeInMinutes, restTimeInMinutes, cookTimeInMinutes, forPatient, allergens } = req.body;
+
+    try {
+        await Recipes.create({
+            title: title,
+            featuredImage: featuredImage,
+            description: description,
+            ingredients: ingredients,
+            directions: directions,
+            prepTimeInMinutes: prepTimeInMinutes,
+            restTimeInMinutes: restTimeInMinutes,
+            cookTimeInMinutes: cookTimeInMinutes,
+            forPatient: forPatient,
+        }).then(function(createdRecipe) {
+            return createdRecipe.setRecipeAllergens(allergens);
+        });
+
+        res.json({msg: "Recette ajoutée avec succès"});
+    } catch (error) {
+        console.log(error);
+    }
+}

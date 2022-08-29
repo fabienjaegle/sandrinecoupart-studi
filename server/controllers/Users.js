@@ -13,22 +13,30 @@ export const getUsers = async(req, res) => {
     }
 }
 
-export const Register = async(req, res) => {
-    const { lastname, firstname, email, username, password, confPassword } = req.body;
+export const postNewUser = async(req, res) => {
+    const { lastname, firstname, email, username, password, confPassword, allergens, diets } = req.body;
+    
+    //TODO: verify user already present in database
+
     if(password !== confPassword) return res.status(400).json({msg: "Les mots de passe ne sont pas identiques"});
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
     try {
-        await Users.create({
+        const user = await Users.create({
             lastname: lastname,
             firstname: firstname,
             email: email,
             username: username,
-            password: hashPassword
+            password: hashPassword,
+            isPatient: true
         });
-        res.json({msg: "Inscription avec succès"});
+        
+        user.setAllergens(allergens);
+        user.setDiets(diets);
+
+        res.json({msg: "Utilisateur crée avec succès"});
     } catch (error) {
-        console.log(error);
+        res.json({msg: error});
     }
 }
 
