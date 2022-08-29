@@ -23,7 +23,7 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/dashboard/createPatient" element={<CreatePatient />}></Route>
-        <Route path="/dashboard/createPatient" element={<CreateRecipe />}></Route>
+        <Route path="/dashboard/createRecipe" element={<CreateRecipe />}></Route>
         <Route path="/terms" element={<Home />}></Route>
         <Route path="/private-policy" element={<Home />}></Route>
       </Routes>
