@@ -45,6 +45,7 @@ export const Login = async(req, res) => {
         const lastname = user.dataValues.lastname;
         const firstname = user.dataValues.firstname;
         const email = user.dataValues.email;
+        const isPatient = user.isPatient;
         const accessToken = jwt.sign({userId, lastname, firstname, email}, process.env.ACCESS_TOKEN_SECRET,{
             expiresIn: '20s'
         });
@@ -62,7 +63,7 @@ export const Login = async(req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
         });
-        res.json({ accessToken, lastname, firstname });
+        res.json({ accessToken, lastname, firstname, isPatient });
     } catch (error) {
         res.status(404).json({msg:"Utilisateur introuvable"});
     }

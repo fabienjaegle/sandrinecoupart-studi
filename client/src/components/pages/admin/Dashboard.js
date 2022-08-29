@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
     const [lastname, setLastname] = useState('');
     const [firstname, setFirstname] = useState('');
+    const [isPatient, setIsPatient] = useState(false);
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
@@ -24,6 +25,7 @@ const Dashboard = () => {
             const decoded = jwt_decode(response.data.accessToken);
             setLastname(decoded.lastname);
             setFirstname(decoded.firstname);
+            setIsPatient(decoded.isPatient);
             setExpire(decoded.exp);
         } catch (error) {
             if (error.response) {
@@ -43,6 +45,7 @@ const Dashboard = () => {
             const decoded = jwt_decode(response.data.accessToken);
             setLastname(decoded.lastname);
             setFirstname(decoded.firstname);
+            setIsPatient(decoded.isPatient);
             setExpire(decoded.exp);
         }
         return config;
@@ -57,6 +60,10 @@ const Dashboard = () => {
             }
         });
         setUsers(response.data);
+    }
+    
+    const returnFront = async () => {
+        navigate("/");
     }
 
     const createPatient = async () => {
@@ -82,30 +89,44 @@ const Dashboard = () => {
     return (
         <div className="container mt-5">
             <h1>Bonjour, {lastname} {firstname}</h1>
-            <button onClick={createPatient} className="button is-info">Créer un patient</button>
-            <button onClick={createRecipe} className="button is-info">Créer une recette</button>
-            <button onClick={logout} className="button is-info">Se déconnecter</button>
-            <table className="table is-striped is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Lastname</th>
-                        <th>Firstname</th>
-                        <th>Is Patient</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user, index) => (
-                        <tr key={user.id}>
-                            <td>{index + 1}</td>
-                            <td>{user.lastname}</td>
-                            <td>{user.firstname}</td>
-                            <td>{user.isPatient ? 'Yes' : 'No'}</td>
+            <div className="d-flex gap-3 mb-3">
+                <div className="justify-content-start gap-3 mb-3">
+                    <button onClick={returnFront} className="button is-info">Retour au site</button>
+                </div>
+                <div className="justify-content-center gap-3 mb-3">
+                    <button onClick={createPatient} className="button is-info">Créer un patient</button>
+                    <button onClick={createRecipe} className="button is-info">Créer une recette</button>
+                </div>
+                <div className="justify-content-end gap-3 mb-3">
+                    <button onClick={logout} className="button is-info">Se déconnecter</button>
+                </div>
+            </div>
+{!isPatient ? 
+            <>
+                <h2>Tous les utilisateurs</h2>
+                <table className="table is-striped is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Est un patient ?</th>
                         </tr>
-                    ))}
+                    </thead>
+                    <tbody>
+                        {users.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.lastname}</td>
+                                <td>{user.firstname}</td>
+                                <td>{user.isPatient ? 'Oui' : 'Non'}</td>
+                            </tr>
+                        ))}
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </>
+: ''}
         </div>
     )
 }
