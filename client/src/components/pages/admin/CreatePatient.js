@@ -9,16 +9,12 @@ const CreatePatient = () => {
     firstname: Yup.string().required('Veuillez entrer un prénom'),
     email: Yup
       .string()
-      .email()
+      .email('L\'adresse mail doit être valide')
       .required('Veuillez entrer une adresse mail'),
     username: Yup.string().required('Veuillez entrer un nom d\'utilisateur'),
     password: Yup
       .string()
-      .required('Veuillez entrer un mot de passe')
-      .matches(
-        "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-        "Le mot de passe doit contenir 8 caractères, une majuscule, une minuscule, un nombre et un caractère spécial"
-      ),
+      .required('Veuillez entrer un mot de passe'),
     confirmPassword: Yup
       .string()
       .required('Veuillez confirmer le mot de passe')
@@ -32,7 +28,7 @@ const CreatePatient = () => {
     username: "",
     password: "",
     confirmPassword : "",
-    tags: []
+    allergens: []
   };
 
   const handleSubmit = (values) => {
@@ -105,12 +101,12 @@ const CreatePatient = () => {
                                 name="allergens"
                                 type="checkbox"
                                 value={allergen}
-                                checked={values.tags.includes(allergen.allergen)}
+                                checked={values.allergens.includes(allergen.allergen)}
                                 onChange={e => {
                                   if (e.target.checked) {
                                     arrayHelpers.push(allergen.allergen);
                                   } else {
-                                    const idx = values.tags.indexOf(allergen.allergen);
+                                    const idx = values.allergens.indexOf(allergen.allergen);
                                     arrayHelpers.remove(idx);
                                   }
                                 }}
@@ -121,7 +117,7 @@ const CreatePatient = () => {
                         </div>
                       )}
                     />
-                    <ErrorMessage name="tags" component="small" className="text-danger" />
+                    <ErrorMessage name="allergens" component="small" className="text-danger" />
                   </div>
                   
                   <div className="form-group d-flex justify-content-end gap-3 mb-3">
