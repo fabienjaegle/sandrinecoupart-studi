@@ -123,7 +123,9 @@ const CreatePatient = () => {
                     />
                     <ErrorMessage name="tags" component="small" className="text-danger" />
                   </div>
-                  <div className="form-group d-flex justify-content-end gap-3">
+                  
+                  <div className="form-group d-flex justify-content-end gap-3 mb-3">
+                    <a className="btn btn-light" href="/dashboard">Retour</a>
                     <button type="submit" className="btn btn-secondary">Créer</button>
                     <button type="button" onClick={resetForm} className="btn btn-primary">Reset</button>
                   </div>
