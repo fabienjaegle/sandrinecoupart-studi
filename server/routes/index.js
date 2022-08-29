@@ -4,6 +4,7 @@ import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 import { getExcerptPublicRecipies } from "../controllers/Recipes.js";
 import { getFullPublicRecipe } from "../controllers/Recipes.js";
+import { getAllergens } from "../controllers/Allergens.js";
 
 const router = express.Router();
 
@@ -11,6 +12,7 @@ router.get('/users', verifyToken, getUsers);
 router.post('/users', Register);
 router.post('/recipes/public/excerpt', getExcerptPublicRecipies);
 router.post('/recipes/public/full', getFullPublicRecipe);
+router.get('/allergens', getAllergens);
 router.post('/login', Login);
 router.get('/token', refreshToken);
 router.delete('/logout', Logout);

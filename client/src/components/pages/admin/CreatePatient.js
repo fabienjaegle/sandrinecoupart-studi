@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import {Formik, Field, FieldArray, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import "bootstrap/dist/css/bootstrap.css";
@@ -35,15 +35,25 @@ const CreatePatient = () => {
     tags: []
   };
 
-  const tagCollection = [
-    { value: "one", label: "One" },
-    { value: "two", label: "Two" },
-    { value: "three", label: "Three" }
-  ];
-
   const handleSubmit = (values) => {
     console.log(values)
   };
+
+  const [allergens, setAllergens] = useState([])
+
+  const fetchData = () => {
+    fetch('http://localhost:5000/allergens')
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        setAllergens(data)
+      })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <div className="container">
@@ -84,28 +94,28 @@ const CreatePatient = () => {
                   <ErrorMessage name="confirmPassword" component="small" className="text-danger" />
                 </div>
                 <div className="form-group mb-3">
-                  <label htmlFor="confirmPassword">Tags :</label>
+                  <label htmlFor="confirmPassword">Allergies :</label>
                     <FieldArray
-                      name="tags"
+                      name="allergens"
                       render={arrayHelpers => (
                         <div>
-                          {tagCollection.map(tag => (
-                            <label key={tag.value}>
+                          {allergens.map(allergen => (
+                            <label key={allergen.id}>
                               <input
-                                name="tags"
+                                name="allergens"
                                 type="checkbox"
-                                value={tag}
-                                checked={values.tags.includes(tag.value)}
+                                value={allergen}
+                                checked={values.tags.includes(allergen.allergen)}
                                 onChange={e => {
                                   if (e.target.checked) {
-                                    arrayHelpers.push(tag.value);
+                                    arrayHelpers.push(allergen.allergen);
                                   } else {
-                                    const idx = values.tags.indexOf(tag.value);
+                                    const idx = values.tags.indexOf(allergen.allergen);
                                     arrayHelpers.remove(idx);
                                   }
                                 }}
                               />
-                              <span>{tag.label}</span>
+                              <span>{allergen.allergen}</span>
                             </label>
                           ))}
                         </div>
