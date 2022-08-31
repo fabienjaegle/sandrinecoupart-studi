@@ -16,8 +16,12 @@ const Dashboard = () => {
 
     const getCurrentUser = async () => {
         const currentUser = AuthService.getCurrentUser();
+        if (currentUser) {
+            setCurrentUser(currentUser);
+        }else {
+            navigate("/");
+        }
         
-        setCurrentUser(currentUser);
     }
 
     const getUsers = async () => {
@@ -50,10 +54,12 @@ const Dashboard = () => {
                 <div className="justify-content-start gap-3 mb-3">
                     <button onClick={returnFront} className="button is-info">Retour au site</button>
                 </div>
-                <div className="justify-content-center gap-3 mb-3">
-                    <button onClick={createPatient} className="button is-info">Créer un patient</button>
-                    <button onClick={createRecipe} className="button is-info">Créer une recette</button>
-                </div>
+                {!currentUser?.isPatient ?
+                    <div className="justify-content-center gap-3 mb-3">
+                        <button onClick={createPatient} className="button is-info">Créer un patient</button>
+                        <button onClick={createRecipe} className="button is-info">Créer une recette</button>
+                    </div>
+                : ''}
                 <div className="justify-content-end gap-3 mb-3">
                     <button onClick={logout} className="button is-info">Se déconnecter</button>
                 </div>
