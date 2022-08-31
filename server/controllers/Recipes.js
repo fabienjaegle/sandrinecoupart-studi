@@ -3,6 +3,8 @@ import Allergens from "../models/AllergenModel.js";
 import Categories from "../models/CategoryModel.js";
 import Diets from "../models/DietModel.js";
 import Reviews from "../models/ReviewModel.js";
+import db from "../config/Database.js";
+import { QueryTypes } from "sequelize";
 
 export const getExcerptPublicRecipies = async(req, res) => {
     try {
@@ -25,7 +27,7 @@ export const getExcerptPublicRecipies = async(req, res) => {
 export const getFullPublicRecipe = async(req, res) => {
     const { recipeid } = req.body;
     try {
-        const recipes = await Recipes.findOne({
+        const recipe = await Recipes.findOne({
             include: [{ 
               model: Allergens,
               through: { attributes: []}
@@ -43,7 +45,14 @@ export const getFullPublicRecipe = async(req, res) => {
                 forPatient: false,
             }
         });
-        res.json(recipes);
+
+        const reviewCount = await db.query('SELECT CAST(SUM(rate) / COUNT(id) AS DECIMAL(4,1)) AS globalRate FROM reviews WHERE recipeId = :recipeId',
+        {
+            replacements: { recipeId: recipeid },
+            type: QueryTypes.SELECT
+        });
+console.log(reviewCount);
+        res.json({recipe, reviewCount});
     } catch (error) {
         console.log(error);
     }

@@ -10,12 +10,14 @@ function Recipe(props) {
     const { id } = useParams();
 
     const [recipe, setRecipe] = React.useState(null);
+    const [reviewCount, setReviewCount] = React.useState(null);
 
     React.useEffect(() => {
         axios.post('http://localhost:5000/recipes/public/full', {
             recipeid: id
         }).then((response) => {
-            setRecipe(response.data);
+            setRecipe(response.data.recipe);
+            setReviewCount(response.data.reviewCount);
         });
     }, [id]);
 
@@ -25,7 +27,7 @@ function Recipe(props) {
         <>
         <Header />
         <Breadcrumb title={recipe.title} />
-        <RecipeDetail recipe={recipe} />
+        <RecipeDetail recipe={recipe} reviewCount={reviewCount} />
         <Footer />
         </>
     )

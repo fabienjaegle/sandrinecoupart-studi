@@ -17,6 +17,7 @@ const RecipeDetail = (props) => {
     };
     
     const item = props.recipe;
+    const globalRate = props.reviewCount[0].globalRate;
 
     return (
         <div className="section pt-4">
@@ -36,9 +37,9 @@ const RecipeDetail = (props) => {
 
                                 <div className="courses-details-admin">
                                     <div className="admin-rating">
-                                        <span className="rating-count">4.9</span>
+                                        <span className="rating-count">{globalRate}</span>
                                         <span className="rating-star">
-                                        <span className="rating-bar" style={{width: 80 + '%'}}></span>
+                                        <span className="rating-bar" style={{width: globalRate * 100 / 5 + '%'}}></span>
                                         </span>
                                     </div>
                                 </div>
