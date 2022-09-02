@@ -39,7 +39,7 @@ class Header extends React.Component {
 
     componentDidMount() {
         const user = AuthService.getCurrentUser();
-        console.log('user', user);
+
         if (user) {
           this.setState({
             currentUser: user,
@@ -79,9 +79,7 @@ class Header extends React.Component {
                             {currentUser ? (
                                 <div className="navbar-nav mr-auto">
                                     <li className="nav-item">
-                                        <NavLink to={"/dashboard"} className="nav-link">
-                                            Bonjour, {currentUser.lastname} {currentUser.firstname}
-                                        </NavLink>
+                                        Bonjour, {currentUser.lastname} {currentUser.firstname}
                                     </li>
                                     <li className="nav-item">
                                         <a href="/" className="nav-link" onClick={this.logOut}>

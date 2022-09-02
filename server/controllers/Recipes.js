@@ -24,6 +24,31 @@ export const getExcerptPublicRecipies = async(req, res) => {
     }
 }
 
+export const getExcerptPrivateRecipies = async(req, res) => {
+    const { userid } = req.body;
+    try {
+        const recipes = await db.query(
+        'SELECT DISTINCT(r.id), r.id, r.featuredImage, r.prepTimeInMinutes, r.cookTimeInMinutes FROM recipes r' +
+        ' INNER JOIN recipe_allergen ra ON ra.recipeId = r.id' +
+        ' INNER JOIN recipe_diet rd ON rd.recipeId = r.id' +
+        ' AND rd.dietId IN (' +
+        '    SELECT dietId FROM user_diet WHERE userId = :userId' +
+        ')' +
+        ' AND ra.allergenId NOT IN (' +
+        '    SELECT allergenId FROM user_allergen WHERE userId = :userId' +
+        ')' +
+        ' AND r.forPatient = 1',
+        {
+            replacements: { userId: userid },
+            type: QueryTypes.SELECT
+        });
+
+        res.json(recipes);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getFullPublicRecipe = async(req, res) => {
     const { recipeid } = req.body;
     try {
@@ -51,7 +76,39 @@ export const getFullPublicRecipe = async(req, res) => {
             replacements: { recipeId: recipeid },
             type: QueryTypes.SELECT
         });
-console.log(reviewCount);
+
+        res.json({recipe, reviewCount});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getFullPrivateRecipe = async(req, res) => {
+    const { recipeid, userid } = req.body;
+    try {
+        const recipe = await db.query(
+        'SELECT DISTINCT(r.id), r.id, r.featuredImage, r.prepTimeInMinutes, r.cookTimeInMinutes FROM recipes r' +
+        ' INNER JOIN recipe_allergen ra ON ra.recipeId = r.id' +
+        ' INNER JOIN recipe_diet rd ON rd.recipeId = r.id' +
+        ' AND rd.dietId IN (' +
+        '    SELECT dietId FROM user_diet WHERE userId = :userId' +
+        ')' +
+        ' AND ra.allergenId NOT IN (' +
+        '    SELECT allergenId FROM user_allergen WHERE userId = :userId' +
+        ')' +
+        ' AND r.forPatient = 1' +
+        ' WHERE r.id = :recipeId',
+        {
+            replacements: { userId: userid, recipeId: recipeid },
+            type: QueryTypes.SELECT
+        });
+
+        const reviewCount = await db.query('SELECT CAST(SUM(rate) / COUNT(id) AS DECIMAL(4,1)) AS globalRate FROM reviews WHERE recipeId = :recipeId',
+        {
+            replacements: { recipeId: recipeid },
+            type: QueryTypes.SELECT
+        });
+
         res.json({recipe, reviewCount});
     } catch (error) {
         console.log(error);

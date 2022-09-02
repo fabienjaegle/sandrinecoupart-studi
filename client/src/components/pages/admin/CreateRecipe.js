@@ -1,7 +1,8 @@
-import React from 'react';
-import {Formik, Field, Form, ErrorMessage} from 'formik';
+import React, { useEffect, useState } from "react";
+import {Formik, Field, FieldArray, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import "bootstrap/dist/css/bootstrap.css";
+import UserService from "../../../services/user.service";
 
 const CreateRecipe = () => {
     const validationSchema = Yup.object().shape({
@@ -21,10 +22,43 @@ const CreateRecipe = () => {
         restTimeInMinutes: 0,
         cookTimeInMinutes: 0,
         forPatient: false,
+        allergens: [],
+        diets: []
     };
 
-    const handleSubmit = (values) => {
-        console.log(values)
+    const [allergens, setAllergens] = useState([]);
+    const [diets, setDiets] = useState([]);
+    const [info, setInfo] = useState('');
+    const [error, setError] = useState('');
+  
+    useEffect(() => {
+      fetchAllergensData();
+      fetchDietsData();
+    }, [])
+
+    const fetchAllergensData = () => {
+      UserService.getAllergens()
+        .then(response => {
+          setAllergens(response.data);
+        })
+    }
+  
+    const fetchDietsData = () => {
+      UserService.getDiets()
+        .then(response => {
+          setDiets(response.data);
+        })
+    }
+
+    const handleSubmit = (values, resetForm) => {
+        UserService.postNewRecipe(values).then(response => {
+            if (response.status === 200) {
+              setInfo(response.data.msg);
+            } else {
+              setError(response.data.msg);
+            }
+            resetForm({values: ''});
+        });
     };
 
     return (
@@ -32,12 +66,21 @@ const CreateRecipe = () => {
             <div className="row">
                 <div className="col-md-6 offset-md-3 pt-3">
                     <h1 className="text-center">Créer une recette</h1>
+                    {info ? 
+                        <div class="alert alert-success" role="alert">
+                        {info}
+                        </div> : ''
+                    }
+                    {error ? 
+                        <div class="alert alert-danger" role="alert">
+                        {error}
+                        </div> : ''
+                    }
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
-                        onSubmit={(values) => handleSubmit(values)}
-                    >
-                        {({ resetForm }) => (
+                        onSubmit={(values, {resetForm}) => handleSubmit(values, resetForm)}>
+                        {({ resetForm, values }) => (
                             <Form>
                                 <div className="form-group mb-3">
                                     <label htmlFor="title">
@@ -55,7 +98,7 @@ const CreateRecipe = () => {
                                         className="text-danger"
                                     />
                                 </div>
-                                <div className="form-group mb-3">
+                                {/*<div className="form-group mb-3">
                                     <label htmlFor="featuredImage">
                                         Image :
                                     </label>
@@ -70,7 +113,7 @@ const CreateRecipe = () => {
                                         component="small"
                                         className="text-danger"
                                     />
-                                </div>
+                                </div>*/}
                                 <div className="form-group mb-3">
                                     <label htmlFor="description">
                                         Description :
@@ -185,21 +228,73 @@ const CreateRecipe = () => {
                                         className="text-danger d-block"
                                     />
                                 </div>
+                                <div className="row">
+                                    <div className="col-6 form-group mb-5">
+                                        <label htmlFor="allergens">Allergènes :</label>
+                                        <FieldArray
+                                            name="allergens"
+                                            render={arrayHelpers => (
+                                            <div>
+                                                {allergens.map(allergen => (
+                                                <label key={allergen.id}>
+                                                    <input
+                                                    name="allergens"
+                                                    type="checkbox"
+                                                    value={allergen}
+                                                    checked={values.allergens.includes(allergen.id)}
+                                                    onChange={e => {
+                                                        if (e.target.checked) {
+                                                            arrayHelpers.push(allergen.id);
+                                                        } else {
+                                                            const idx = values.allergens.indexOf(allergen.id);
+                                                            arrayHelpers.remove(idx);
+                                                        }
+                                                    }}
+                                                    />
+                                                    <span>{allergen.allergen}</span>
+                                                </label>
+                                                ))}
+                                            </div>
+                                            )}
+                                        />
+                                        <ErrorMessage name="allergens" component="small" className="text-danger" />
+                                    </div>
+                                    
+                                    <div className="col-6 form-group mb-5">
+                                        <label htmlFor="diets">Régimes :</label>
+                                        <FieldArray
+                                            name="diets"
+                                            render={arrayHelpers => (
+                                            <div>
+                                                {diets.map(diet => (
+                                                <label key={diet.id}>
+                                                    <input
+                                                    name="diets"
+                                                    type="checkbox"
+                                                    value={diet}
+                                                    checked={values.diets.includes(diet.id)}
+                                                    onChange={e => {
+                                                        if (e.target.checked) {
+                                                            arrayHelpers.push(diet.id);
+                                                        } else {
+                                                            const idx = values.diets.indexOf(diet.id);
+                                                            arrayHelpers.remove(idx);
+                                                        }
+                                                    }}
+                                                    />
+                                                    <span>{diet.diet}</span>
+                                                </label>
+                                                ))}
+                                            </div>
+                                            )}
+                                        />
+                                        <ErrorMessage name="diets" component="small" className="text-danger" />
+                                    </div>
+                                </div>
                                 <div className="form-group d-flex justify-content-end gap-3 mb-3">
-                                    <a className="btn btn-light" href="/dashboard">Retour</a>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-secondary"
-                                    >
-                                        Créer
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={resetForm}
-                                        className="btn btn-primary"
-                                    >
-                                        Reset
-                                    </button>
+                                    <a className="btn btn-light" href="/admin">Retour</a>
+                                    <button type="submit" className="btn btn-secondary">Créer</button>
+                                    <button type="button" onClick={resetForm} className="btn btn-primary">Reset</button>
                                 </div>
                             </Form>
                         )}

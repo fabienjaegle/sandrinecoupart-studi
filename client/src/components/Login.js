@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/auth.service';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
-    const navigate = useNavigate();
 
     const Auth = async (e) => {
         e.preventDefault();
         try {
             await AuthService.login(username, password)
             .then((result) => {
-                navigate("/dashboard");
+                window.location.reload(false);
             });
             
         } catch (error) {
@@ -24,7 +22,6 @@ const Login = () => {
     }
 
     return (
-
         <form onSubmit={Auth}>
             <p className="has-text-centered">{msg}</p>
             <div className="row">

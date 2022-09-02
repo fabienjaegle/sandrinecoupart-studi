@@ -71,7 +71,7 @@ export const Login = async(req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
         });
-        res.json({ accessToken, lastname, firstname, isPatient });
+        res.json({ accessToken, userId, lastname, firstname, isPatient });
     } catch (error) {
         res.status(404).json({msg:"Utilisateur introuvable"});
     }

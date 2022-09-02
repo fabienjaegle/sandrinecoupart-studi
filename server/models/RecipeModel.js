@@ -52,7 +52,7 @@ const RecipeAllergen = db.define('Recipe_Allergen', {}, {
 Recipes.belongsToMany(Allergens, { through: RecipeAllergen });
 Allergens.belongsToMany(Recipes, { through: RecipeAllergen });
 
-const RecipeCategory = db.define('Category_Recipe', {}, {
+const RecipeCategory = db.define('Recipe_Category', {}, {
     freezeTableName:true,
     timestamps: false
 });
@@ -60,7 +60,7 @@ const RecipeCategory = db.define('Category_Recipe', {}, {
 Recipes.belongsToMany(Categories, { through: RecipeCategory });
 Categories.belongsToMany(Recipes, { through: RecipeCategory });
 
-const RecipeDiet = db.define('Diet_Recipe', {}, {
+const RecipeDiet = db.define('Recipe_Diet', {}, {
     freezeTableName:true,
     timestamps: false
 });

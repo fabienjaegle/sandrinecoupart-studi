@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
 import {Formik, Field, FieldArray, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import "bootstrap/dist/css/bootstrap.css";
@@ -17,7 +16,7 @@ const CreatePatient = () => {
     password: Yup
       .string()
       .required('Veuillez entrer un mot de passe'),
-      confPassword: Yup
+    confPassword: Yup
       .string()
       .required('Veuillez confirmer le mot de passe')
       .oneOf([Yup.ref("password"), null], "Les mots de passe doivent correspondre"),
@@ -38,7 +37,6 @@ const CreatePatient = () => {
   const [diets, setDiets] = useState([]);
   const [info, setInfo] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAllergensData();
@@ -58,13 +56,14 @@ const CreatePatient = () => {
       })
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, resetForm) => {
     UserService.postNewUser(values).then(response => {
       if (response.status === 200) {
         setInfo(response.data.msg);
       }else {
         setError(response.data.msg);
       }
+      resetForm({values: ''});
     });
   };
 
@@ -83,7 +82,10 @@ const CreatePatient = () => {
               {error}
             </div> : ''
           }
-          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values) => handleSubmit(values)}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={(values, {resetForm}) => handleSubmit(values, resetForm)}>
             {({ resetForm, values }) => (
               <Form>
                 <div className="form-group mb-3">
@@ -116,74 +118,75 @@ const CreatePatient = () => {
                   <Field type="password" id="confPassword" name="confPassword" className="form-control" />
                   <ErrorMessage name="confPassword" component="small" className="text-danger" />
                 </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="allergens">Allergies :</label>
-                  <FieldArray
-                    name="allergens"
-                    render={arrayHelpers => (
-                      <div>
-                        {allergens.map(allergen => (
-                          <label key={allergen.id}>
-                            <input
-                              name="allergens"
-                              type="checkbox"
-                              value={allergen}
-                              checked={values.allergens.includes(allergen.id)}
-                              onChange={e => {
-                                if (e.target.checked) {
-                                  arrayHelpers.push(allergen.id);
-                                } else {
-                                  const idx = values.allergens.indexOf(allergen.id);
-                                  arrayHelpers.remove(idx);
-                                }
-                              }}
-                            />
-                            <span>{allergen.allergen}</span>
-                          </label>
-                        ))}
-                      </div>
-                    )}
-                  />
-                  <ErrorMessage name="allergens" component="small" className="text-danger" />
-                </div>
-
-                <div className="form-group mb-3">
-                  <label htmlFor="diets">Régimes :</label>
-                  <FieldArray
-                    name="diets"
-                    render={arrayHelpers => (
-                      <div>
-                        {diets.map(diet => (
-                          <label key={diet.id}>
-                            <input
-                              name="diets"
-                              type="checkbox"
-                              value={diet}
-                              checked={values.diets.includes(diet.id)}
-                              onChange={e => {
-                                if (e.target.checked) {
-                                  arrayHelpers.push(diet.id);
-                                } else {
-                                  const idx = values.diets.indexOf(diet.id);
-                                  arrayHelpers.remove(idx);
-                                }
-                              }}
-                            />
-                            <span>{diet.diet}</span>
-                          </label>
-                        ))}
-                      </div>
-                    )}
-                  />
-                  <ErrorMessage name="diets" component="small" className="text-danger" />
+                <div className="row">
+                  <div className="col-6 form-group mb-5">
+                      <label htmlFor="allergens">Allergies :</label>
+                      <FieldArray
+                          name="allergens"
+                          render={arrayHelpers => (
+                          <div>
+                              {allergens.map(allergen => (
+                              <label key={allergen.id}>
+                                  <input
+                                  name="allergens"
+                                  type="checkbox"
+                                  value={allergen}
+                                  checked={values.allergens.includes(allergen.id)}
+                                  onChange={e => {
+                                      if (e.target.checked) {
+                                          arrayHelpers.push(allergen.id);
+                                      } else {
+                                          const idx = values.allergens.indexOf(allergen.id);
+                                          arrayHelpers.remove(idx);
+                                      }
+                                  }}
+                                  />
+                                  <span>{allergen.allergen}</span>
+                              </label>
+                              ))}
+                          </div>
+                          )}
+                      />
+                      <ErrorMessage name="allergens" component="small" className="text-danger" />
                   </div>
                   
-                  <div className="form-group d-flex justify-content-end gap-3 mb-3">
-                    <a className="btn btn-light" href="/dashboard">Retour</a>
-                    <button type="submit" className="btn btn-secondary">Créer</button>
-                    <button type="button" onClick={resetForm} className="btn btn-primary">Reset</button>
+                  <div className="col-6 form-group mb-5">
+                      <label htmlFor="diets">Régimes :</label>
+                      <FieldArray
+                          name="diets"
+                          render={arrayHelpers => (
+                          <div>
+                              {diets.map(diet => (
+                              <label key={diet.id}>
+                                  <input
+                                  name="diets"
+                                  type="checkbox"
+                                  value={diet}
+                                  checked={values.diets.includes(diet.id)}
+                                  onChange={e => {
+                                      if (e.target.checked) {
+                                          arrayHelpers.push(diet.id);
+                                      } else {
+                                          const idx = values.diets.indexOf(diet.id);
+                                          arrayHelpers.remove(idx);
+                                      }
+                                  }}
+                                  />
+                                  <span>{diet.diet}</span>
+                              </label>
+                              ))}
+                          </div>
+                          )}
+                      />
+                      <ErrorMessage name="diets" component="small" className="text-danger" />
                   </div>
-                </Form>
+              </div>
+              <div className="form-group d-flex justify-content-end gap-3 mb-3">
+                <a className="btn btn-light" href="/admin">Retour</a>
+                <button type="submit" className="btn btn-secondary">Créer</button>
+                <button type="button" onClick={resetForm} className="btn btn-primary">Reset</button>
+              </div>
+              </Form>
               )}
             </Formik>
           </div>

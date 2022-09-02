@@ -5,6 +5,7 @@ import Header from "../Header";
 import RecipeDetail from '../RecipeDetail';
 import Footer from "../Footer";
 import Breadcrumb from "../Breadcrumb";
+import AuthService from '../../services/auth.service';
 
 function Recipe(props) {
     const { id } = useParams();
@@ -13,12 +14,24 @@ function Recipe(props) {
     const [reviewCount, setReviewCount] = React.useState(null);
 
     React.useEffect(() => {
-        axios.post('http://localhost:5000/recipes/public/full', {
-            recipeid: id
-        }).then((response) => {
-            setRecipe(response.data.recipe);
-            setReviewCount(response.data.reviewCount);
-        });
+        const currentUser = AuthService.getCurrentUser();
+
+        if (currentUser) {
+            axios.post('http://localhost:5000/recipes/private/full', {
+                recipeid: id,
+                userid: currentUser.id
+            }).then((response) => {
+                setRecipe(response.data.recipe);
+                setReviewCount(response.data.reviewCount);
+            });
+        } else {
+            axios.post('http://localhost:5000/recipes/public/full', {
+                recipeid: id
+            }).then((response) => {
+                setRecipe(response.data.recipe);
+                setReviewCount(response.data.reviewCount);
+            });
+        }
     }, [id]);
 
     if (!recipe) return null;

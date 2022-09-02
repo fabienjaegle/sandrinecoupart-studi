@@ -16,7 +16,7 @@ const Dashboard = () => {
 
     const getCurrentUser = async () => {
         const currentUser = AuthService.getCurrentUser();
-        if (currentUser) {
+        if (currentUser && !currentUser.isPatient) {
             setCurrentUser(currentUser);
         }else {
             navigate("/");
@@ -35,11 +35,11 @@ const Dashboard = () => {
     }
 
     const createPatient = async () => {
-        navigate("/dashboard/createPatient");
+        navigate("/admin/createPatient");
     }
 
     const createRecipe = async () => {
-        navigate("/dashboard/createRecipe");
+        navigate("/admin/createRecipe");
     }
 
     const logout = async () => {
