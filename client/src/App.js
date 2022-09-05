@@ -7,10 +7,12 @@ import Register from "./components/pages/Register";
 import Recipes from "./components/pages/Recipes";
 import Recipe from "./components/pages/Recipe";
 import Contact from "./components/pages/Contact";
+import Terms from "./components/pages/Terms";
+import Policy from "./components/pages/Policy";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './IcoFont.css';
-import Terms from "./components/pages/Terms";
+
 
 function App() {
   return (
@@ -25,7 +27,7 @@ function App() {
         <Route path="/admin/createPatient" element={<CreatePatient />}></Route>
         <Route path="/admin/createRecipe" element={<CreateRecipe />}></Route>
         <Route path="/terms" element={<Terms />}></Route>
-        <Route path="/private-policy" element={<Home />}></Route>
+        <Route path="/private-policy" element={<Policy />}></Route>
       </Routes>
     </BrowserRouter>
   );
