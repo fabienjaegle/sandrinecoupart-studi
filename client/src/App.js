@@ -10,6 +10,7 @@ import Contact from "./components/pages/Contact";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './IcoFont.css';
+import Terms from "./components/pages/Terms";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Route path="/admin" element={<Dashboard />}></Route>
         <Route path="/admin/createPatient" element={<CreatePatient />}></Route>
         <Route path="/admin/createRecipe" element={<CreateRecipe />}></Route>
-        <Route path="/terms" element={<Home />}></Route>
+        <Route path="/terms" element={<Terms />}></Route>
         <Route path="/private-policy" element={<Home />}></Route>
       </Routes>
     </BrowserRouter>
