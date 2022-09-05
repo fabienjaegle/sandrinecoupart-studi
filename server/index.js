@@ -1,23 +1,25 @@
-const path = require('path');
-const express = require("express");
-
-const PORT = process.env.PORT || 3001;
-
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import db from "./config/Database.js";
+import router from "./routes/index.js";
+import bodyparser from 'body-parser';
+dotenv.config();
 const app = express();
 
-// Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+try {
+    await db.authenticate();
+    console.log('Database connected...');
+} catch (error) {
+    console.error(error);
+}
 
-// Handle GET requests to /api route
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
+app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+app.use(cookieParser());
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(router);
 
-// All other GET requests not handled before will return our React app
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+app.listen(5000, ()=> console.log('Server running at port 5000'));
