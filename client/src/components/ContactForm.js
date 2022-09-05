@@ -1,6 +1,45 @@
+import React, { useState } from "react";
+import {Formik, Field, Form, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
+import UserService from "../services/user.service";
+
 const ContactForm = () => {
+
+    const [info, setInfo] = useState('');
+    const [error, setError] = useState('');
+
+    const validationSchema = Yup.object({
+        name: Yup.string().required('Veuillez entrer votre nom'),
+        email: Yup
+          .string()
+          .email('L\'adresse mail doit être valide')
+          .required('Veuillez entrer une adresse mail'),
+        subject: Yup.string().required('Veuillez entrer un sujet'),
+        message: Yup
+          .string()
+          .required('Veuillez entrer un message')
+    });
+
+    const initialValues = {
+        name: "",
+        email : "",
+        subject: "",
+        message: ""
+    };
+
+    const addContact = (values, resetForm) => {
+        UserService.postNewContact(values).then(response => {
+          if (response.status === 200) {
+            setInfo("Votre message a bien été envoyé. Nous prendrons contact très prochainement.");
+          }else {
+            setError("Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer ultérieurement.");
+          }
+          resetForm({values: ''});
+        });
+    };
+
     return (
-<div className="section section-padding">
+        <div className="section section-padding">
             <div className="container">
                 <div className="contact-wrapper">
                     <div className="row justify-content-center">
@@ -11,46 +50,67 @@ const ContactForm = () => {
                                     <h2 className="main-title">Vous avez une question ? Contactez-moi.</h2>
                                 </div>
                                 <div className="form-shuvo">
-                                    <form className="contact-form wow fadeInLeft" id="reused_form" action="POST">
-                                        <div className="row">
-                                            <div className="col-lg-6">
-                                                <div className="form-group mt-2">
-                                                    <input name="name" id="name" type="text" className="form-control" placeholder="Votre nom*" required="" />
+                                    <Formik
+                                        initialValues={initialValues}
+                                        validationSchema={validationSchema}
+                                        onSubmit={(values, {resetForm}) => addContact(values, resetForm)}>
+                                        {({ resetForm, values }) => (
+                                            <Form className="contact-form wow fadeInLeft" id="reused_form">
+                                                <div className="row">
+                                                    <div className="col-lg-6">
+                                                        <div className="form-group mt-2">
+                                                            <Field type="text" className="form-control" name="name" id="name" placeholder="Votre nom" />
+                                                            <ErrorMessage name="name" component="small" className="text-danger" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-6">
+                                                        <div className="form-group mt-2">
+                                                            <Field type="email" className="form-control" name="email" id="email" placeholder="Votre adresse mail" />
+                                                            <ErrorMessage name="email" component="small" className="text-danger" />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div className="form-group mt-2">
-                                                    <input name="email" id="email" type="email" className="form-control" placeholder="Votre adresse mail*" required="" />
+                                                <div className="row">
+                                                    <div className="col-lg-12">
+                                                        <div className="form-group mt-2">
+                                                            <Field type="text" className="form-control" name="subject" id="subject" placeholder="Votre sujet" />
+                                                            <ErrorMessage name="subject" component="small" className="text-danger" />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-lg-12">
-                                                <div className="form-group mt-2">
-                                                    <input type="text" className="form-control" name="subject" id="subject" placeholder="Votre sujet" required="" />
+                                                <div className="row">
+                                                    <div className="col-lg-12">
+                                                        <div className="form-group mt-2">
+                                                            <Field
+                                                                as="textarea"
+                                                                id="message"
+                                                                name="message"
+                                                                rows="4"
+                                                                placeholder="Votre message..."
+                                                            />
+                                                            <ErrorMessage name="message" component="small" className="text-danger" />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-lg-12">
-                                                <div className="form-group mt-2">
-                                                    <textarea name="comments" id="comments" rows="4" className="form-control" placeholder="Votre message..."></textarea>
+                                                <div className="row">
+                                                    <div className="col-lg-12 text-left mt-4">
+                                                        <button type="submit" className="btn btn-secondary btn-hover-primary">Envoyer</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-lg-12 text-left mt-4">
-                                                <button type="submit" className="btn btn-secondary btn-hover-primary">Envoyer</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                            </Form>
+                                        )}
+                                    </Formik>
                                 </div>
-                                {/*<div id="success_message" style="display:none; " className="col-md-12 text-success pt-5">
-                                    <h3>Your message submit successfully!</h3>
-                                </div>
-                                <div id="error_message" style="display:none; " className="col-md-12">
-                                    <h3>Error</h3> Sorry there was an error sending your form.
-                                </div>*/}
+                                {info ? 
+                                    <div id="success_message" className="col-md-12 text-success pt-5">
+                                    <p>{info}</p>
+                                    </div> : ''
+                                }
+                                {error ? 
+                                    <div id="error_message" className="col-md-12">
+                                        <p>Erreur</p> {error}
+                                    </div> : ''
+                                }
                             </div>
                         </div>
                         <div className="col-lg-6">

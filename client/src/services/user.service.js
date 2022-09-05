@@ -29,11 +29,17 @@ const postNewReview = (values) => {
     recipeid: values.recipeid
   })
 }
+const postNewContact = (values) => {
+  return api.post("/contact", {
+    values: values
+  })
+}
 const UserService = {
   getUsers,
   getAllergens,
   getDiets,
   postNewUser,
-  postNewReview
+  postNewReview,
+  postNewContact
 };
 export default UserService;

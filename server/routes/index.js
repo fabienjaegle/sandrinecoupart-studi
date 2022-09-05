@@ -7,6 +7,7 @@ import { getFullPublicRecipe, postNewRecipes, getExcerptPrivateRecipies, getFull
 import { getGlobalRate, getReviews, postNewReview } from "../controllers/Reviews.js";
 import { getAllergens } from "../controllers/Allergens.js";
 import { getDiets } from "../controllers/Diets.js";
+import { postNewContact } from "../controllers/Contacts.js";
 
 const router = express.Router();
 
@@ -20,6 +21,7 @@ router.post('/reviews', getReviews);
 router.post('/review/globalRate', getGlobalRate);
 router.post('/review', postNewReview);
 router.post('/recipes', postNewRecipes);
+router.post('/contact', postNewContact);
 router.get('/allergens', getAllergens);
 router.get('/diets', getDiets);
 router.post('/login', Login);
