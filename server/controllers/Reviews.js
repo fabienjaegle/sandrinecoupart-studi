@@ -37,14 +37,14 @@ export const postNewReview = async(req, res) => {
     const { name, comment, rate, recipeid } = req.body;
     console.log(req.body);
     try {
-        await Reviews.create({
+        const newReview = await Reviews.create({
             name,
             comment,
             rate,
             recipeId: recipeid
         })
 
-        res.json({msg: "Avis ajouté avec succès"});
+        res.json({newReview: newReview, msg: "Avis ajouté avec succès"});
     } catch (error) {
         console.log(error);
     }

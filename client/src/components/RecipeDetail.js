@@ -29,7 +29,12 @@ class RecipeDetail extends Component {
     validationSchema = Yup.object({
         name: Yup.string().required('Veuillez entrer votre nom'),
         comment: Yup.string().required('Veuillez entrer votre avis'),
-        rate: Yup.number().integer().required('Veuillez choisir une note'),
+        rate: Yup.number().integer()
+        .required()
+        .test(
+            'Is positive?', 
+            'Veuillez choisir une note', (value) => value > 0
+        ),
     });
 
     handleClose = () => this.setState(state => ({show: false}));
@@ -65,8 +70,11 @@ class RecipeDetail extends Component {
             })
         })
     
+        var that = this;
         $('#rating li').on('click', function(e) {
             var onStar = parseInt($(this).data('value'), 10);
+            that.initialValues.rate = onStar;
+            that.setState({rate: onStar });
             var siblings = $(this).parent().children('li.star');
             Array.from(siblings, function(item) {
                 var value = item.dataset.value;
@@ -89,17 +97,16 @@ class RecipeDetail extends Component {
         recipeid: this.props.id
       };
 
-    AddReview = (values, resetForm) => {
-        console.log(values);
+    addReview = (values, resetForm) => {
         UserService.postNewReview(values)
         .then((response) => {
             if (response.status === 200) {
                 this.setState(state => ({
                     //Add new review to the reviews array list
-                    reviews: state.reviews.concat(values),
+                    reviews: state.reviews.concat(response.data.newReview),
                     info: response.data.info
                 }))
-                this.globalRate(); //recalculate the global rate of the recipe.
+                this.getGlobalRate(); //recalculate the global rate of the recipe.
             } else {
                 this.setState(state => ({
                     error: response.data.msg
@@ -230,7 +237,7 @@ class RecipeDetail extends Component {
                                                             <Formik
                                                                 initialValues={this.initialValues}
                                                                 validationSchema={this.validationSchema}
-                                                                onSubmit={(values, {resetForm}) => this.AddReview(values, resetForm)}>
+                                                                onSubmit={(values, {resetForm}) => this.addReview(values, resetForm)}>
                                                                 {({ resetForm, values }) => (
                                                                     <Form>
                                                                         <div className="row">
