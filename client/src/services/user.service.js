@@ -19,12 +19,21 @@ const postNewUser = (values) => {
     isPatient: values.isPatient,
     allergens: values.allergens,
     diets: values.diets
-});
+  });
+}
+const postNewReview = (values) => {
+  return api.post("/review", {
+    name: values.name,
+    comment: values.comment,
+    rate: values.rate,
+    recipeid: values.recipeid
+  })
 }
 const UserService = {
   getUsers,
   getAllergens,
   getDiets,
-  postNewUser
+  postNewUser,
+  postNewReview
 };
 export default UserService;

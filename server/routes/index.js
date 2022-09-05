@@ -4,6 +4,7 @@ import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 import { getExcerptPublicRecipies } from "../controllers/Recipes.js";
 import { getFullPublicRecipe, postNewRecipes, getExcerptPrivateRecipies, getFullPrivateRecipe } from "../controllers/Recipes.js";
+import { getGlobalRate, getReviews, postNewReview } from "../controllers/Reviews.js";
 import { getAllergens } from "../controllers/Allergens.js";
 import { getDiets } from "../controllers/Diets.js";
 
@@ -11,10 +12,13 @@ const router = express.Router();
 
 router.get('/users', getUsers);
 router.post('/user', postNewUser);
-router.post('/recipes/public/excerpt', getExcerptPublicRecipies);
+router.get('/recipes/public/excerpt', getExcerptPublicRecipies);
 router.post('/recipes/public/full', getFullPublicRecipe);
 router.post('/recipes/private/excerpt', getExcerptPrivateRecipies);
 router.post('/recipes/private/full', getFullPrivateRecipe);
+router.post('/reviews', getReviews);
+router.post('/review/globalRate', getGlobalRate);
+router.post('/review', postNewReview);
 router.post('/recipes', postNewRecipes);
 router.get('/allergens', getAllergens);
 router.get('/diets', getDiets);

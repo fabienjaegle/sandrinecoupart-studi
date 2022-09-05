@@ -36,7 +36,7 @@ class RecipesList extends React.Component {
             }
         } else {
             try {
-                axios.post('http://localhost:5000/recipes/public/excerpt')
+                axios.get('http://localhost:5000/recipes/public/excerpt')
                 .then((res) => res.data)
                 .then((json) => {
                     this.setState({

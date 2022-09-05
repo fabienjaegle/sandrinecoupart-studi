@@ -11,7 +11,6 @@ function Recipe(props) {
     const { id } = useParams();
 
     const [recipe, setRecipe] = React.useState(null);
-    const [reviewCount, setReviewCount] = React.useState(null);
 
     React.useEffect(() => {
         const currentUser = AuthService.getCurrentUser();
@@ -22,14 +21,12 @@ function Recipe(props) {
                 userid: currentUser.id
             }).then((response) => {
                 setRecipe(response.data.recipe);
-                setReviewCount(response.data.reviewCount);
             });
         } else {
             axios.post('http://localhost:5000/recipes/public/full', {
                 recipeid: id
             }).then((response) => {
-                setRecipe(response.data.recipe);
-                setReviewCount(response.data.reviewCount);
+                setRecipe(response.data);
             });
         }
     }, [id]);
@@ -40,7 +37,7 @@ function Recipe(props) {
         <>
         <Header />
         <Breadcrumb title={recipe.title} />
-        <RecipeDetail recipe={recipe} reviewCount={reviewCount} />
+        <RecipeDetail id={id} />
         <Footer />
         </>
     )

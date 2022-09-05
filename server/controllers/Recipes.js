@@ -2,7 +2,6 @@ import Recipes from "../models/RecipeModel.js";
 import Allergens from "../models/AllergenModel.js";
 import Categories from "../models/CategoryModel.js";
 import Diets from "../models/DietModel.js";
-import Reviews from "../models/ReviewModel.js";
 import db from "../config/Database.js";
 import { QueryTypes } from "sequelize";
 
@@ -51,6 +50,7 @@ export const getExcerptPrivateRecipies = async(req, res) => {
 
 export const getFullPublicRecipe = async(req, res) => {
     const { recipeid } = req.body;
+
     try {
         const recipe = await Recipes.findOne({
             include: [{ 
@@ -62,8 +62,6 @@ export const getFullPublicRecipe = async(req, res) => {
             }, {
                 model: Diets,
                 trough: { attributes: []}
-            }, {
-                model: Reviews
             }],
             where: {
                 id: recipeid,
@@ -71,13 +69,7 @@ export const getFullPublicRecipe = async(req, res) => {
             }
         });
 
-        const reviewCount = await db.query('SELECT CAST(SUM(rate) / COUNT(id) AS DECIMAL(4,1)) AS globalRate FROM reviews WHERE recipeId = :recipeId',
-        {
-            replacements: { recipeId: recipeid },
-            type: QueryTypes.SELECT
-        });
-
-        res.json({recipe, reviewCount});
+        res.json(recipe);
     } catch (error) {
         console.log(error);
     }
@@ -102,14 +94,8 @@ export const getFullPrivateRecipe = async(req, res) => {
             replacements: { userId: userid, recipeId: recipeid },
             type: QueryTypes.SELECT
         });
-
-        const reviewCount = await db.query('SELECT CAST(SUM(rate) / COUNT(id) AS DECIMAL(4,1)) AS globalRate FROM reviews WHERE recipeId = :recipeId',
-        {
-            replacements: { recipeId: recipeid },
-            type: QueryTypes.SELECT
-        });
-
-        res.json({recipe, reviewCount});
+console.log(recipe);
+        res.json(recipe);
     } catch (error) {
         console.log(error);
     }

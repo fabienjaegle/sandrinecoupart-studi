@@ -10,7 +10,6 @@ import Contact from "./components/pages/Contact";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './IcoFont.css';
-import './Main.js';
 
 function App() {
   return (

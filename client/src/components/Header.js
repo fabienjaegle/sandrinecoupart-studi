@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Modal, Button } from "react-bootstrap";
 import Login from './Login';
 import AuthService from '../services/auth.service';
+import $ from 'jquery';
 
 class Header extends React.Component {
     constructor(props) {
@@ -47,6 +48,63 @@ class Header extends React.Component {
             show: false
           });
         }
+
+        function menuScript() {
+
+            $('.menu-toggle').on('click', function(){
+                $('.mobile-menu').addClass('open')
+                $('.overlay').addClass('open')
+            });
+            
+            $('.menu-close').on('click', function(){
+                $('.mobile-menu').removeClass('open')
+                $('.overlay').removeClass('open')
+            });
+            
+            $('.overlay').on('click', function(){
+                $('.mobile-menu').removeClass('open')
+                $('.overlay').removeClass('open')
+            });
+            
+            /*Variables*/
+            var $offCanvasNav = $('.mobile-menu-items'),
+            $offCanvasNavSubMenu = $offCanvasNav.find('.sub-menu');
+    
+            /*Add Toggle Button With Off Canvas Sub Menu*/
+            $offCanvasNavSubMenu.parent().prepend('<span class="mobile-menu-expand"></span>');
+    
+            /*Close Off Canvas Sub Menu*/
+            $offCanvasNavSubMenu.slideUp();
+    
+            /*Category Sub Menu Toggle*/
+            $offCanvasNav.on('click', 'li a, li .mobile-menu-expand, li .menu-title', function(e) {
+                var $this = $(this);
+                if (($this.parent().attr('class').match(/\b(menu-item-has-children|has-children|has-sub-menu)\b/)) && ($this.attr('href') === '#' || $this.hasClass('mobile-menu-expand'))) {
+                    e.preventDefault();
+                    if ($this.siblings('ul:visible').length) {
+                        $this.parent('li').removeClass('active-expand');
+                        $this.siblings('ul').slideUp();
+                    } else {
+                        $this.parent('li').addClass('active-expand');
+                        $this.closest('li').siblings('li').find('ul:visible').slideUp();
+                        $this.closest('li').siblings('li').removeClass('active-expand');
+                        $this.siblings('ul').slideDown();
+                    }
+                }
+            });
+    
+            $( ".sub-menu" ).parent( "li" ).addClass( "menu-item-has-children" );
+        }
+        menuScript();
+
+        $(window).on('scroll', function(event) {    
+            var scroll = $(window).scrollTop();
+            if (scroll <= 100) {
+                $(".header-main").removeClass("sticky");
+            } else{
+                $(".header-main").addClass("sticky");
+            }
+        });
     }
     logOut() {
         AuthService.logout();
