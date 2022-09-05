@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2a88ae6c.css",
+    "main.js": "/static/js/main.df7e2d6b.js",
+    "static/media/icofont.woff": "/static/media/icofont.dad3accba068281878f1.woff",
+    "static/media/NotoSans-Bold.ttf": "/static/media/NotoSans-Bold.23e70cfbbe0783c66804.ttf",
+    "static/media/NotoSans-Regular.ttf": "/static/media/NotoSans-Regular.eae34fa8f1e0c4c6d797.ttf",
+    "static/media/NotoSans-Medium.ttf": "/static/media/NotoSans-Medium.a4c42b7a92bf0fdb8ec1.ttf",
+    "static/media/NotoSans-Light.ttf": "/static/media/NotoSans-Light.2cfb54d923b32fbd5525.ttf",
+    "static/media/icofont.woff2": "/static/media/icofont.9c33516aab48c61e3081.woff2",
+    "static/media/BalooBhaina2-Medium.ttf": "/static/media/BalooBhaina2-Medium.889903fbe1b4a0772bfb.ttf",
+    "static/media/BalooBhaina2-Bold.ttf": "/static/media/BalooBhaina2-Bold.d941d398e2dc1beeb7ed.ttf",
+    "static/media/BalooBhaina2-Regular.ttf": "/static/media/BalooBhaina2-Regular.605943d2ccac73e6827e.ttf",
+    "static/media/page-banner.jpg": "/static/media/page-banner.6b4cdb63c1e69509501d.jpg",
+    "static/media/ReenieBeanie.ttf": "/static/media/ReenieBeanie.9bc6ea24dd52b9716bb3.ttf",
+    "static/media/slider-3.jpg": "/static/media/slider-3.2b16c6fdab8d0d6745a0.jpg",
+    "index.html": "/index.html",
+    "main.2a88ae6c.css.map": "/static/css/main.2a88ae6c.css.map",
+    "main.df7e2d6b.js.map": "/static/js/main.df7e2d6b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2a88ae6c.css",
+    "static/js/main.df7e2d6b.js"
+  ]
+}
