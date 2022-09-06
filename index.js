@@ -16,7 +16,7 @@ await db.authenticate().then(() => {
     });
 
 app.use(express.static('public'));
-app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
