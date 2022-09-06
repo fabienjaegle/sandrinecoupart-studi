@@ -23,4 +23,4 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(router);
 
-app.listen(5000, ()=> console.log('Server running at port 5000'));
+app.listen(process.env.port, ()=> console.log('Server running at port 5000'));
