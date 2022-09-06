@@ -15,9 +15,9 @@ await db.authenticate().then(() => {
         console.error('Unable to connect to the database:', err);
     });
 
-app.use(express.static("/client/build/"));
+app.use(express.static("public"));
 app.get(/.*/, (req, res) => {
-    res.sendFile("/client/build/index.html");
+    res.sendFile("public/index.html");
 });
 app.use(cors());
 app.use(cookieParser());
