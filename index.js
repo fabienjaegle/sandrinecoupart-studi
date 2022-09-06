@@ -16,7 +16,7 @@ await db.authenticate().then(() => {
         console.error('Unable to connect to the database:', err);
     });
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname + 'public')));
 app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
 app.use(cookieParser());
 app.use(bodyparser.json());
@@ -25,4 +25,4 @@ app.use(express.json());
 app.use(router);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
