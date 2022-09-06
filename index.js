@@ -8,12 +8,13 @@ import bodyparser from 'body-parser';
 dotenv.config();
 const app = express();
 
-try {
-    await db.authenticate();
-    console.log('Database connected...');
-} catch (error) {
-    console.error(error);
-}
+
+await db.authenticate().then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
 
 app.use(express.static('public'));
 app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
