@@ -19,7 +19,7 @@ class RecipesList extends React.Component {
 
         if (currentUser) {
             try {
-                axios.post('http://localhost:5000/recipes/private/excerpt', {
+                axios.post('/recipes/private/excerpt', {
                     userid: currentUser.userId
                 })
                 .then((res) => res.data)
@@ -36,7 +36,7 @@ class RecipesList extends React.Component {
             }
         } else {
             try {
-                axios.get('http://localhost:5000/recipes/public/excerpt')
+                axios.get('/recipes/public/excerpt')
                 .then((res) => res.data)
                 .then((json) => {
                     this.setState({

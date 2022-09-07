@@ -16,14 +16,14 @@ function Recipe(props) {
         const currentUser = AuthService.getCurrentUser();
 
         if (currentUser) {
-            axios.post('http://localhost:5000/recipes/private/full', {
+            axios.post('/recipes/private/full', {
                 recipeid: id,
                 userid: currentUser.id
             }).then((response) => {
                 setRecipe(response.data.recipe);
             });
         } else {
-            axios.post('http://localhost:5000/recipes/public/full', {
+            axios.post('/recipes/public/full', {
                 recipeid: id
             }).then((response) => {
                 setRecipe(response.data);

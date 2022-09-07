@@ -121,7 +121,7 @@ class RecipeDetail extends Component {
         const currentUser = AuthService.getCurrentUser();
 
         if (currentUser) {
-            axios.post('http://localhost:5000/recipes/private/full', {
+            axios.post('/recipes/private/full', {
                 recipeid: this.props.id,
                 userid: currentUser.id
             }).then((response) => {
@@ -130,7 +130,7 @@ class RecipeDetail extends Component {
                 }))
             });
         } else {
-            axios.post('http://localhost:5000/recipes/public/full', {
+            axios.post('/recipes/public/full', {
                 recipeid: this.props.id
             }).then((response) => {
                 this.setState(state => ({
@@ -141,7 +141,7 @@ class RecipeDetail extends Component {
     }
 
     getReviews = () => {
-        axios.post('http://localhost:5000/reviews', {
+        axios.post('/reviews', {
             recipeid: this.props.id
         }).then((response) => {
             this.setState(state => ({
@@ -151,7 +151,7 @@ class RecipeDetail extends Component {
     }
     
     getGlobalRate = () => {
-        axios.post('http://localhost:5000/review/globalRate', {
+        axios.post('/review/globalRate', {
             recipeid: this.props.id
         }).then((response) => {
             this.setState(state => ({
