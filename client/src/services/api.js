@@ -1,7 +1,8 @@
 import axios from "axios";
 import TokenService from "./token.service";
+
 const instance = axios.create({
-  baseURL: "",
+  baseURL: process.env.NODE_ENV === 'production' ? "" : "http://localhost:5000",
   headers: {
     "Content-Type": "application/json",
   },

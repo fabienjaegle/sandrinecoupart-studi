@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMortarPestle, faFireBurner, faBed } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +7,7 @@ import * as Yup from 'yup';
 import $ from 'jquery';
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
+import instance from "../services/api";
 
 class RecipeDetail extends Component {
 
@@ -121,7 +121,7 @@ class RecipeDetail extends Component {
         const currentUser = AuthService.getCurrentUser();
 
         if (currentUser) {
-            axios.post('/recipes/private/full', {
+            instance.post('/recipes/private/full', {
                 recipeid: this.props.id,
                 userid: currentUser.id
             }).then((response) => {
@@ -130,7 +130,7 @@ class RecipeDetail extends Component {
                 }))
             });
         } else {
-            axios.post('/recipes/public/full', {
+            instance.post('/recipes/public/full', {
                 recipeid: this.props.id
             }).then((response) => {
                 this.setState(state => ({
@@ -141,7 +141,7 @@ class RecipeDetail extends Component {
     }
 
     getReviews = () => {
-        axios.post('/reviews', {
+        instance.post('/reviews', {
             recipeid: this.props.id
         }).then((response) => {
             this.setState(state => ({
@@ -151,7 +151,7 @@ class RecipeDetail extends Component {
     }
     
     getGlobalRate = () => {
-        axios.post('/review/globalRate', {
+        instance.post('/review/globalRate', {
             recipeid: this.props.id
         }).then((response) => {
             this.setState(state => ({

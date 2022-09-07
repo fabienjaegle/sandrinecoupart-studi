@@ -1,8 +1,8 @@
 import React from "react";
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSeedling, faMortarPestle, faFireBurner } from '@fortawesome/free-solid-svg-icons'
 import AuthService from '../services/auth.service';
+import instance from "../services/api";
 
 class RecipesList extends React.Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class RecipesList extends React.Component {
 
         if (currentUser) {
             try {
-                axios.post('/recipes/private/excerpt', {
+                instance.post('/recipes/private/excerpt', {
                     userid: currentUser.userId
                 })
                 .then((res) => res.data)
@@ -36,7 +36,7 @@ class RecipesList extends React.Component {
             }
         } else {
             try {
-                axios.get('/recipes/public/excerpt')
+                instance.get('/recipes/public/excerpt')
                 .then((res) => res.data)
                 .then((json) => {
                     this.setState({
