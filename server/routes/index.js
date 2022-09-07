@@ -8,6 +8,11 @@ import { getGlobalRate, getReviews, postNewReview } from "../controllers/Reviews
 import { getAllergens } from "../controllers/Allergens.js";
 import { getDiets } from "../controllers/Diets.js";
 import { postNewContact } from "../controllers/Contacts.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+//we need to change up how __dirname is used for ES6 purposes
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const router = express.Router();
 
@@ -27,5 +32,8 @@ router.get('/diets', getDiets);
 router.post('/login', Login);
 router.get('/token', refreshToken);
 router.delete('/logout', Logout);
+router.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
+});
 
 export default router;
