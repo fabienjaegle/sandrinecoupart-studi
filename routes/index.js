@@ -33,7 +33,7 @@ router.post('/login', Login);
 router.get('/token', refreshToken);
 router.delete('/logout', Logout);
 router.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'))
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
 });
 
 export default router;
