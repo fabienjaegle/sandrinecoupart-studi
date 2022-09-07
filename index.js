@@ -15,8 +15,12 @@ await db.authenticate().then(() => {
         console.error('Unable to connect to the database:', err);
     });
 
-app.use(express.static("public"));
-app.use(cors());
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static("public"));
+    app.use(cors());
+} else {
+    app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+}
 app.use(cookieParser());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
