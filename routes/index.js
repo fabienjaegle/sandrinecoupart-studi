@@ -9,6 +9,10 @@ import { getAllergens } from "../controllers/Allergens.js";
 import { getDiets } from "../controllers/Diets.js";
 import { postNewContact } from "../controllers/Contacts.js";
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+//we need to change up how __dirname is used for ES6 purposes
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const router = express.Router();
 
