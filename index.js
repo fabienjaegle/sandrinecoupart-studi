@@ -5,7 +5,6 @@ import cors from "cors";
 import db from "./config/Database.js";
 import router from "./routes/index.js";
 import bodyparser from 'body-parser';
-import path from 'path';
 dotenv.config();
 const app = express();
 
@@ -18,7 +17,7 @@ await db.authenticate().then(() => {
 
 app.use(express.static("../client/build"));
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    res.sendFile('../client/build/index.html');
 });
 app.use(cors());
 app.use(cookieParser());
