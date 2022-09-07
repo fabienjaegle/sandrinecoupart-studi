@@ -5,6 +5,7 @@ import cors from "cors";
 import db from "./config/Database.js";
 import router from "./routes/index.js";
 import bodyparser from 'body-parser';
+const path = require("path");
 dotenv.config();
 const app = express();
 
