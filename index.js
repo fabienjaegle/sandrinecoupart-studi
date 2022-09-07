@@ -16,9 +16,6 @@ await db.authenticate().then(() => {
     });
 
 app.use(express.static("public"));
-app.get('*', (req, res) => {
-    res.sendFile('public/index.html');
-});
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyparser.json());
