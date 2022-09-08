@@ -73,7 +73,7 @@ export const Login = async(req, res) => {
         });
         res.json({ accessToken, userId, lastname, firstname, isPatient });
     } catch (error) {
-        res.json({msg:`Une erreur est survenue : ${error}`});
+        res.status(500).json({msg:`Une erreur est survenue : ${error}`});
     }
 }
 
