@@ -73,7 +73,7 @@ export const Login = async(req, res) => {
         });
         res.json({ accessToken, userId, lastname, firstname, isPatient });
     } catch (error) {
-        res.status(404).json({msg:"Utilisateur introuvable"});
+        res.json({msg:`Une erreur est survenue : ${error}`});
     }
 }
 
