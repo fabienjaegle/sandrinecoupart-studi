@@ -1,6 +1,8 @@
 import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const getUsers = async(req, res) => {
     try {
@@ -73,7 +75,7 @@ export const Login = async(req, res) => {
         });
         res.json({ accessToken, userId, lastname, firstname, isPatient });
     } catch (error) {
-        res.status(404).json({msg:"Utilisateur introuvable"});
+        res.status(500).json({msg:`Une erreur est survenue : ${error}`});
     }
 }
 
