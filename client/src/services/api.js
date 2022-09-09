@@ -1,7 +1,5 @@
 import axios from "axios";
 import TokenService from "./token.service";
-import dotenv from "dotenv";
-dotenv.config();
 
 const instance = axios.create({
   baseURL: process.env.NODE_ENV === 'production' ? "" : "http://localhost:5000",
