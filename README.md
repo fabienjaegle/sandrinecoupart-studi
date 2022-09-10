@@ -27,7 +27,3 @@ Exécutez le script SQL contenu dans le dossier `server\db\scoupart.sql`.
 L'exécution se fait via deux terminaux de commandes, un pour la partie backend et l'autre pour la partie frontend.
 - Backend : se placer dans le dossier `server` et lancer la commande `nodemon index.js`
 - Frontend : se placer dans le dossier `client` et lancer la commande `npm start`
-
-### Administration
-L'administrateur actuel du site est `admin/toto`. La connexion se fait via le bouton *Se connecter* du site.
-L'URL `https://sandrinecoupartstudi.herokuapp.com/admin` permet d'administrer le site (ajout de nouveaux patients, de nouvelles recettes, etc.).
