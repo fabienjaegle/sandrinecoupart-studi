@@ -8,7 +8,7 @@ import bodyparser from 'body-parser';
 dotenv.config();
 const app = express();
 
-await db.authenticate().then(() => {
+db.authenticate().then(() => {
         console.log('Connection has been established successfully.');
     })
     .catch(err => {
