@@ -21,7 +21,6 @@ const Dashboard = () => {
         }else {
             navigate("/");
         }
-        
     }
 
     const getUsers = async () => {
@@ -34,12 +33,12 @@ const Dashboard = () => {
         navigate("/");
     }
 
-    const createPatient = async () => {
-        navigate("/admin/createPatient");
+    const patientsList = async () => {
+        navigate("/admin/patients/list");
     }
 
-    const createRecipe = async () => {
-        navigate("/admin/createRecipe");
+    const recipesList = async () => {
+        navigate("/admin/recipes/list");
     }
 
     const logout = async () => {
@@ -56,8 +55,8 @@ const Dashboard = () => {
                 </div>
                 {!currentUser?.isPatient ?
                     <div className="justify-content-center gap-3 mb-3">
-                        <button onClick={createPatient} className="button is-info">Créer un patient</button>
-                        <button onClick={createRecipe} className="button is-info">Créer une recette</button>
+                        <button onClick={patientsList} className="button is-info">Liste des patients</button>
+                        <button onClick={recipesList} className="button is-info">Liste des recettes</button>
                     </div>
                 : ''}
                 <div className="justify-content-end gap-3 mb-3">

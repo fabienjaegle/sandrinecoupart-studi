@@ -2,11 +2,20 @@ import api from "./api";
 const getUsers = () => {
   return api.get("/users");
 }
+const getPatients = () => {
+  return api.get("/patients");
+}
+const getPatient = (id) => {
+  return api.get(`/patients/${id}`)
+}
 const getAllergens = () => {
   return api.get("/allergens");
 }
 const getDiets = () => {
   return api.get("/diets");
+}
+const getRecipes = () => {
+  return api.get("/recipes");
 }
 const postNewUser = (values) => {
   return api.post("/user", {
@@ -36,8 +45,11 @@ const postNewContact = (values) => {
 }
 const UserService = {
   getUsers,
+  getPatients,
+  getPatient,
   getAllergens,
   getDiets,
+  getRecipes,
   postNewUser,
   postNewReview,
   postNewContact

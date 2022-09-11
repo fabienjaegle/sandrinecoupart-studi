@@ -15,6 +15,36 @@ export const getUsers = async(req, res) => {
     }
 }
 
+export const getPatients = async(req, res) => {
+    try {
+        const users = await Users.findAll({
+            attributes:['id','lastname', 'firstname', 'username'],
+            where: {
+                isPatient: true
+            }
+        });
+        res.json(users);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getPatient = async(req, res) => {
+
+    try {
+        const user = await Users.findOne({
+            attributes:['id','lastname', 'firstname', 'username'],
+            where: {
+                isPatient: true,
+                id: req.params.id
+            }
+        });
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const postNewUser = async(req, res) => {
     const { lastname, firstname, email, username, password, confPassword, allergens, diets } = req.body;
     

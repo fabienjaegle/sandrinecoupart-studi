@@ -5,6 +5,17 @@ import Diets from "../models/DietModel.js";
 import db from "../config/Database.js";
 import { QueryTypes } from "sequelize";
 
+export const getRecipes = async(req, res) => {
+    try {
+        const recipes = await Recipes.findAll({
+            attributes:['id', 'title', 'prepTimeInMinutes', 'cookTimeInMinutes', 'restTimeInMinutes', 'publishedDate', 'forPatient'],
+        });
+        res.json(recipes);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getExcerptPublicRecipies = async(req, res) => {
     try {
         const recipes = await Recipes.findAll({

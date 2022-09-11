@@ -1,7 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./components/pages/admin/Dashboard";
-import CreatePatient from "./components/pages/admin/CreatePatient";
-import CreateRecipe from "./components/pages/admin/CreateRecipe";
+import PatientsList from "./components/pages/admin/patients/PatientsList";
+import CreatePatient from "./components/pages/admin/patients/CreatePatient";
+//import EditPatient from "./components/pages/admin/patients/EditPatient";
+import RecipesList from "./components/pages/admin/recipes/RecipesList";
+import CreateRecipe from "./components/pages/admin/recipes/CreateRecipe";
 import Home from "./components/pages/Home";
 import Register from "./components/pages/Register";
 import Recipes from "./components/pages/Recipes";
@@ -24,8 +27,11 @@ function App() {
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/admin" element={<Dashboard />}></Route>
-        <Route path="/admin/createPatient" element={<CreatePatient />}></Route>
-        <Route path="/admin/createRecipe" element={<CreateRecipe />}></Route>
+        <Route path="/admin/patients/list" element={<PatientsList />}></Route>
+        <Route path="/admin/recipes/list" element={<RecipesList />}></Route>
+        <Route path="/admin/patients/add" element={<CreatePatient />}></Route>
+        {/*<Route path="/admin/patients/edit/:id" element={<EditPatient />}></Route>*/}
+        <Route path="/admin/recipes/add" element={<CreateRecipe />}></Route>
         <Route path="/terms" element={<Terms />}></Route>
         <Route path="/private-policy" element={<Policy />}></Route>
       </Routes>

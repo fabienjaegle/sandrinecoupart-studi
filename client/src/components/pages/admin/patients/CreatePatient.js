@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Formik, Field, FieldArray, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import "bootstrap/dist/css/bootstrap.css";
-import UserService from "../../../services/user.service";
+import UserService from "../../../../services/user.service";
 
 const CreatePatient = () => {
   const validationSchema = Yup.object({
@@ -182,7 +182,7 @@ const CreatePatient = () => {
                   </div>
               </div>
               <div className="form-group d-flex justify-content-end gap-3 mb-3">
-                <a className="btn btn-light" href="/admin">Retour</a>
+                <a className="btn btn-light" href="/admin/patients/list">Retour</a>
                 <button type="submit" className="btn btn-secondary">Créer</button>
                 <button type="button" onClick={resetForm} className="btn btn-primary">Reset</button>
               </div>

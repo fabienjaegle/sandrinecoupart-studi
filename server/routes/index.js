@@ -1,9 +1,7 @@
 import express from "express";
-import { getUsers, Login, Logout, postNewUser } from "../controllers/Users.js";
-import { verifyToken } from "../middleware/VerifyToken.js";
+import { getUsers, Login, Logout, postNewUser, getPatients, getPatient } from "../controllers/Users.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
-import { getExcerptPublicRecipies } from "../controllers/Recipes.js";
-import { getFullPublicRecipe, postNewRecipes, getExcerptPrivateRecipies, getFullPrivateRecipe } from "../controllers/Recipes.js";
+import { getRecipes, getExcerptPublicRecipies, getFullPublicRecipe, postNewRecipes, getExcerptPrivateRecipies, getFullPrivateRecipe } from "../controllers/Recipes.js";
 import { getGlobalRate, getReviews, postNewReview } from "../controllers/Reviews.js";
 import { getAllergens } from "../controllers/Allergens.js";
 import { getDiets } from "../controllers/Diets.js";
@@ -18,6 +16,7 @@ const router = express.Router();
 
 router.get('/users', getUsers);
 router.post('/user', postNewUser);
+router.get('/recipes', getRecipes);
 router.get('/recipes/public/excerpt', getExcerptPublicRecipies);
 router.post('/recipes/public/full', getFullPublicRecipe);
 router.post('/recipes/private/excerpt', getExcerptPrivateRecipies);
@@ -30,6 +29,8 @@ router.post('/contact', postNewContact);
 router.get('/allergens', getAllergens);
 router.get('/diets', getDiets);
 router.post('/login', Login);
+router.get('/patients', getPatients);
+router.get('/patients/:id', getPatient);
 router.get('/token', refreshToken);
 router.delete('/logout', Logout);
 router.get('*', function(req, res) {
