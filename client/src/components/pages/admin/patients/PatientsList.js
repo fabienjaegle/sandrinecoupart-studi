@@ -12,7 +12,7 @@ const PatientsList = () => {
     useEffect(() => {
         getCurrentUser();
         getPatients();
-    });
+    }, []);
 
     const getCurrentUser = () => {
         const currentUser = AuthService.getCurrentUser();

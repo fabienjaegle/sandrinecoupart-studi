@@ -76,7 +76,7 @@ const EditPatient = () => {
       console.log(response.data.msg);
       if (response.status === 200) {
         setInfo(response.data.msg);
-      }else {
+      } else {
         setError(response.data.msg);
       }
     });
@@ -87,16 +87,6 @@ const EditPatient = () => {
       <div className="row">
         <div className="col-md-6 offset-md-3 pt-3">
           <h1 className="text-center">Editer un patient</h1>
-          {info ? 
-            <div className="alert alert-success" role="alert">
-              {info}
-            </div> : ''
-          }
-          {error ? 
-            <div className="alert alert-danger" role="alert">
-              {error}
-            </div> : ''
-          }
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -152,7 +142,6 @@ const EditPatient = () => {
                                         arrayHelpers.push(allergen);
                                       } else {
                                         const idx = values.allergens.map(e => e.id).indexOf(allergen.id);
-                                        console.log('idx', idx);
                                         arrayHelpers.remove(idx);
                                       }
                                   }}
@@ -197,6 +186,16 @@ const EditPatient = () => {
                       <ErrorMessage name="diets" component="small" className="text-danger" />
                   </div>
               </div>
+              {info ? 
+                <div className="alert alert-success" role="alert">
+                  {info}
+                </div> : ''
+              }
+              {error ? 
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div> : ''
+              }
               <div className="form-group d-flex justify-content-end gap-3 mb-3">
                 <a className="btn btn-light" href="/admin/patients/list">Retour</a>
                 <button type="submit" className="btn btn-secondary">Modifier</button>
