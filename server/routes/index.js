@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsers, Login, Logout, postNewUser, getPatients, getPatient, updatePatient } from "../controllers/Users.js";
+import { getUsers, Login, Logout, postNewUser, getPatients, getPatient, updatePatient, deletePatient } from "../controllers/Users.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 import { getRecipes, getExcerptPublicRecipies, getFullPublicRecipe, postNewRecipes, getExcerptPrivateRecipies, getFullPrivateRecipe, getRecipe, updateRecipe } from "../controllers/Recipes.js";
 import { getGlobalRate, getReviews, postNewReview } from "../controllers/Reviews.js";
@@ -34,6 +34,7 @@ router.post('/login', Login);
 router.get('/patients', getPatients);
 router.get('/patients/:id', getPatient);
 router.put('/patients/update', updatePatient);
+router.delete('/patients/delete/:id', deletePatient);
 router.get('/token', refreshToken);
 router.delete('/logout', Logout);
 router.get('*', function(req, res) {

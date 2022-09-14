@@ -90,6 +90,18 @@ export const updatePatient = async(req, res) => {
     }
 }
 
+export const deletePatient = async(req, res) => {
+console.log(req.params.id);
+    try {
+        const count = await Users.destroy({ where: {id: req.params.id }});
+
+        res.json(count);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: error});
+    }
+}
+
 export const postNewUser = async(req, res) => {
     const { lastname, firstname, email, username, password, confPassword, allergens, diets } = req.body;
     

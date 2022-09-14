@@ -20,6 +20,9 @@ const updatePatient = (values) => {
     diets: values.diets
   })
 }
+const deletePatient = (id) => {
+  return api.delete(`/patients/delete/${id}`);
+}
 const getAllergens = () => {
   return api.get("/allergens");
 }
@@ -78,6 +81,7 @@ const UserService = {
   getPatients,
   getPatient,
   updatePatient,
+  deletePatient,
   getAllergens,
   getDiets,
   getRecipes,
