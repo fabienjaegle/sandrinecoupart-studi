@@ -113,8 +113,6 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 
 -- Listage des données de la table scoupart.recipes : ~1 rows (environ)
 /*!40000 ALTER TABLE `recipes` DISABLE KEYS */;
-INSERT INTO `recipes` (`id`, `title`, `featuredImage`, `description`, `ingredients`, `directions`, `prepTimeInMinutes`, `restTimeInMinutes`, `cookTimeInMinutes`, `forPatient`, `publishedDate`) VALUES
-	(1, 'Salade grecque\r\n', 'assets/images/recipe-default.jpg', 'Une salade grecque pour refroidir votre été', '2 tomates, ½ concombre, 50 g de feta, 10 olives noires dénoyautées, quelques brins de coriandre, quelques feuilles de basilic, 1 filet d’huile d’olive, sel, poivre.', '1 – Epluchez les tomates, retirez les pépins. Hachez grossièrement la chair.\r\n\r\n2 – Epluchez, retirez les pépins du concombre. Coupez la chair en petits dés.\r\n\r\n3 – Coupez les olives en fines rondelles. Coupez la feta en petits dés. Lavez, ciselez le basilic et la coriandre.\r\n\r\n4 – Dans des verres, déposez une couche de tomates, ajoutez les dés de concombre, la feta, les olives, le basilic et la coriandre. Salez, poivrez. Arrosez d’un filet d’huile d’olive. Servez frais.', 20, 0, 0, 0, '2022-08-21 11:08:09');
 /*!40000 ALTER TABLE `recipes` ENABLE KEYS */;
 
 -- Listage de la structure de la table scoupart. recipe_allergen
@@ -131,9 +129,6 @@ CREATE TABLE IF NOT EXISTS `recipe_allergen` (
 
 -- Listage des données de la table scoupart.recipe_allergen : ~2 rows (environ)
 /*!40000 ALTER TABLE `recipe_allergen` DISABLE KEYS */;
-INSERT INTO `recipe_allergen` (`id`, `allergenId`, `recipeId`) VALUES
-	(1, 7, 1),
-	(2, 10, 1);
 /*!40000 ALTER TABLE `recipe_allergen` ENABLE KEYS */;
 
 -- Listage de la structure de la table scoupart. recipe_category
@@ -150,8 +145,6 @@ CREATE TABLE IF NOT EXISTS `recipe_category` (
 
 -- Listage des données de la table scoupart.recipe_category : ~1 rows (environ)
 /*!40000 ALTER TABLE `recipe_category` DISABLE KEYS */;
-INSERT INTO `recipe_category` (`id`, `categoryId`, `recipeId`) VALUES
-	(1, 1, 1);
 /*!40000 ALTER TABLE `recipe_category` ENABLE KEYS */;
 
 -- Listage de la structure de la table scoupart. recipe_diet
@@ -168,9 +161,6 @@ CREATE TABLE IF NOT EXISTS `recipe_diet` (
 
 -- Listage des données de la table scoupart.recipe_diet : ~2 rows (environ)
 /*!40000 ALTER TABLE `recipe_diet` DISABLE KEYS */;
-INSERT INTO `recipe_diet` (`id`, `dietId`, `recipeId`) VALUES
-	(1, 5, 1),
-	(2, 9, 1);
 /*!40000 ALTER TABLE `recipe_diet` ENABLE KEYS */;
 
 -- Listage de la structure de la table scoupart. reviews
@@ -187,11 +177,6 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 
 -- Listage des données de la table scoupart.reviews : ~4 rows (environ)
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` (`id`, `name`, `comment`, `rate`, `recipeId`) VALUES
-	(1, 'Fab', 'Trop bonne cette salade :) !', 5, 1),
-	(2, 'Toto', 'Un peu déçu', 2, 1),
-	(13, 'Test', 'Horrible !', 1, 1),
-	(14, 'Milou', 'Woof!', 3, 1);
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 
 -- Listage de la structure de la table scoupart. users
@@ -214,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Listage des données de la table scoupart.users : ~1 rows (environ)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `lastname`, `firstname`, `email`, `username`, `password`, `isPatient`, `refresh_token`, `createdAt`, `updatedAt`) VALUES
-	(2, 'Tata', 'Toto', 'fab6887@gmail.com', 'admin', '$2b$10$DWgVr33K37DWP7OcV6jTjOKbYiYOOGS8SyQQMtB5MTX4GopzCqQcK', 0, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImxhc3RuYW1lIjoiVGF0YSIsImZpcnN0bmFtZSI6IlRvdG8iLCJlbWFpbCI6ImZhYjY4ODdAZ21haWwuY29tIiwiaWF0IjoxNjYyODM0MDE2LCJleHAiOjE2NjI5MjA0MTZ9.6GuCkrURN8UTq2K14p0KJ5-s5dHJAf4mUUqkHdRJEfY', '2022-08-18 19:23:13', '2022-09-10 18:20:16');
+	(2, 'Istrateur', 'Admin', 'fab6887@gmail.com', 'admin', '$2b$10$DWgVr33K37DWP7OcV6jTjOKbYiYOOGS8SyQQMtB5MTX4GopzCqQcK', 0, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImxhc3RuYW1lIjoiSXN0cmF0ZXVyIiwiZmlyc3RuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImZhYjY4ODdAZ21haWwuY29tIiwiaWF0IjoxNjYzMTg0MTIxLCJleHAiOjE2NjMyNzA1MjF9.fG7pkj6K3Bb5V_m3Vq72hGvsCDq6f6CHYpYNphMXnys', '2022-08-18 19:23:13', '2022-09-14 19:35:21');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Listage de la structure de la table scoupart. user_allergen
