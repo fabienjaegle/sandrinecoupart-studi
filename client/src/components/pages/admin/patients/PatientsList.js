@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import UserService from '../../../../services/user.service';
 import AuthService from '../../../../services/auth.service';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 const PatientsList = () => {
     const [patients, setPatients] = useState([]);
@@ -60,6 +62,7 @@ const PatientsList = () => {
                         <th>Id</th>
                         <th>Nom</th>
                         <th>Prénom</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,6 +71,7 @@ const PatientsList = () => {
                             <td>{patient.id}</td>
                             <td>{patient.lastname}</td>
                             <td>{patient.firstname}</td>
+                            <td><a href={`/admin/patients/edit/${patient.id}`}><FontAwesomeIcon icon={faPen} /></a></td>
                         </tr>
                     ))}
 

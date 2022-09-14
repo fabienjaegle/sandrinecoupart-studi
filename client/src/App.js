@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./components/pages/admin/Dashboard";
 import PatientsList from "./components/pages/admin/patients/PatientsList";
 import CreatePatient from "./components/pages/admin/patients/CreatePatient";
-//import EditPatient from "./components/pages/admin/patients/EditPatient";
+import EditPatient from "./components/pages/admin/patients/EditPatient";
 import RecipesList from "./components/pages/admin/recipes/RecipesList";
 import CreateRecipe from "./components/pages/admin/recipes/CreateRecipe";
 import Home from "./components/pages/Home";
@@ -30,7 +30,7 @@ function App() {
         <Route path="/admin/patients/list" element={<PatientsList />}></Route>
         <Route path="/admin/recipes/list" element={<RecipesList />}></Route>
         <Route path="/admin/patients/add" element={<CreatePatient />}></Route>
-        {/*<Route path="/admin/patients/edit/:id" element={<EditPatient />}></Route>*/}
+        <Route path="/admin/patients/edit/:id" element={<EditPatient />}></Route>
         <Route path="/admin/recipes/add" element={<CreateRecipe />}></Route>
         <Route path="/terms" element={<Terms />}></Route>
         <Route path="/private-policy" element={<Policy />}></Route>

@@ -8,6 +8,18 @@ const getPatients = () => {
 const getPatient = (id) => {
   return api.get(`/patients/${id}`)
 }
+const updatePatient = (values) => {
+  return api.put("/patients/update", {
+    lastname: values.lastname,
+    firstname: values.firstname,
+    email: values.email,
+    username: values.username,
+    //password: values.password,
+    //confPassword: values.confPassword,
+    allergens: values.allergens,
+    diets: values.diets
+  })
+}
 const getAllergens = () => {
   return api.get("/allergens");
 }
@@ -47,6 +59,7 @@ const UserService = {
   getUsers,
   getPatients,
   getPatient,
+  updatePatient,
   getAllergens,
   getDiets,
   getRecipes,
