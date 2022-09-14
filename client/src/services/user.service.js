@@ -29,6 +29,24 @@ const getDiets = () => {
 const getRecipes = () => {
   return api.get("/recipes");
 }
+const getRecipe = (id) => {
+  return api.get(`/recipes/${id}`);
+}
+const updateRecipe = (values) => {
+  return api.put("/recipes/update", {
+    id: values.id,
+    title: values.title,
+    description: values.description,
+    ingredients: values.ingredients,
+    directions: values.directions,
+    prepTimeInMinutes: values.prepTimeInMinutes,
+    cookTimeInMinutes: values.cookTimeInMinutes,
+    restTimeInMinutes: values.restTimeInMinutes,
+    forPatient: values.forPatient,
+    allergens: values.allergens,
+    diets: values.diets
+  })
+}
 const postNewUser = (values) => {
   return api.post("/user", {
     lastname: values.lastname,
@@ -63,6 +81,8 @@ const UserService = {
   getAllergens,
   getDiets,
   getRecipes,
+  getRecipe,
+  updateRecipe,
   postNewUser,
   postNewReview,
   postNewContact

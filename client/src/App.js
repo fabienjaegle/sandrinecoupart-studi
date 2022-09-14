@@ -15,6 +15,7 @@ import Policy from "./components/pages/Policy";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './IcoFont.css';
+import EditRecipe from "./components/pages/admin/recipes/EditRecipe";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/admin/patients/add" element={<CreatePatient />}></Route>
         <Route path="/admin/patients/edit/:id" element={<EditPatient />}></Route>
         <Route path="/admin/recipes/add" element={<CreateRecipe />}></Route>
+        <Route path="/admin/recipes/edit/:id" element={<EditRecipe />}></Route>
         <Route path="/terms" element={<Terms />}></Route>
         <Route path="/private-policy" element={<Policy />}></Route>
       </Routes>

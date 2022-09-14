@@ -16,6 +16,68 @@ export const getRecipes = async(req, res) => {
     }
 }
 
+export const getRecipe = async(req, res) => {
+
+    try {
+        const recipe = await Recipes.findOne({
+            attributes:['id', 'title', 'description', 'ingredients', 'directions', 'prepTimeInMinutes', 'cookTimeInMinutes', 'restTimeInMinutes', 'publishedDate', 'forPatient'],
+            include: [{ 
+                model: Allergens,
+                through: { attributes: []}
+              }, {
+                model: Diets,
+                through: { attributes: []}
+            }],
+            where: {
+                id: req.params.id
+            }
+        });
+
+        res.json(recipe);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateRecipe = async(req, res) => {
+    const { id, title, description, ingredients, directions, prepTimeInMinutes, cookTimeInMinutes, restTimeInMinutes, forPatient, allergens, diets } = req.body;
+
+    try {        
+        const recipe = await Recipes.findOne({
+            include: [{ 
+                model: Allergens,
+                through: { attributes: []}
+              }, {
+                model: Diets,
+                through: { attributes: []}
+            }],
+            where: {
+                id: id
+            }
+        });
+
+        if (recipe) {
+            recipe.title = title,
+            recipe.description = description,
+            recipe.ingredients = ingredients,
+            recipe.directions = directions,
+            recipe.prepTimeInMinutes = prepTimeInMinutes,
+            recipe.cookTimeInMinutes = cookTimeInMinutes,
+            recipe.restTimeInMinutes = restTimeInMinutes,
+            recipe.forPatient = forPatient,
+            recipe.setAllergens(allergens.map(a => a.id));
+            recipe.setDiets(diets.map(d => d.id));
+            await recipe.save();
+
+            res.json({msg: "Recette mise à jour avec succès"});
+        }else {
+            res.status(400).json({msg: "Une erreur est survenue lors de la mise à jour de la recette"});
+        }
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
 export const getExcerptPublicRecipies = async(req, res) => {
     try {
         const recipes = await Recipes.findAll({
@@ -72,7 +134,7 @@ export const getFullPublicRecipe = async(req, res) => {
                 through: { attributes: []}
             }, {
                 model: Diets,
-                trough: { attributes: []}
+                through: { attributes: []}
             }],
             where: {
                 id: recipeid,

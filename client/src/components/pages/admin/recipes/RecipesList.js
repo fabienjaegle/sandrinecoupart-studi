@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import UserService from '../../../../services/user.service';
 import AuthService from '../../../../services/auth.service';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 const RecipesList = () => {
     const [recipes, setRecipes] = useState([]);
@@ -10,7 +12,7 @@ const RecipesList = () => {
     useEffect(() => {
         getCurrentUser();
         getRecipes();
-    });
+    }, []);
 
     const getCurrentUser = () => {
         const currentUser = AuthService.getCurrentUser();
@@ -63,6 +65,7 @@ const RecipesList = () => {
                         <th>Temps de cuisson</th>
                         <th>Temps de repos</th>
                         <th>Pour les patients ?</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,6 +77,7 @@ const RecipesList = () => {
                             <td>{recipe.cookTimeInMinutes}</td>
                             <td>{recipe.restTimeInMinutes}</td>
                             <td>{recipe.forPatient ? 'Oui' : 'Non'}</td>
+                            <td><a href={`/admin/recipes/edit/${recipe.id}`}><FontAwesomeIcon icon={faPen} /></a></td>
                         </tr>
                     ))}
 
