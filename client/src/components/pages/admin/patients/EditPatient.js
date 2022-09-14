@@ -52,7 +52,6 @@ const EditPatient = () => {
       initialValues.email = response.data.email;
       initialValues.allergens = response.data.allergens;
       initialValues.diets = response.data.diets;
-      console.log(initialValues);
     });
   }, [id])
 
@@ -71,9 +70,7 @@ const EditPatient = () => {
   }
 
   const handleSubmit = (values) => {
-    console.log(values);
     UserService.updatePatient(values).then(response => {
-      console.log(response.data.msg);
       if (response.status === 200) {
         setInfo(response.data.msg);
       } else {

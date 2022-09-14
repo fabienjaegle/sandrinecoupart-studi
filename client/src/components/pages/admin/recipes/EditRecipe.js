@@ -39,7 +39,6 @@ const EditRecipe = () => {
       fetchDietsData();
 
       UserService.getRecipe(id).then(response => {
-        console.log(response.data);
         initialValues.title = response.data.title;
         initialValues.description = response.data.description;
         initialValues.ingredients = response.data.ingredients;
@@ -69,7 +68,6 @@ const EditRecipe = () => {
 
     const handleSubmit = (values) => {
         values.id = id;
-        console.log(values);
         UserService.updateRecipe(values).then(response => {
             if (response.status === 200) {
               setInfo(response.data.msg);

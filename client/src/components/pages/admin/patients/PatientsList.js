@@ -61,13 +61,11 @@ const PatientsList = () => {
     };
 
     const submitDelete = (id) => {
-        console.log(id);
         UserService.deletePatient(id).then(response => {
             if (response.status === 200) {
                 setMessage(`Le patient '${patients.find((x) => x.id === id).firstname} ${patients.find((x) => x.id === id).lastname}' a été supprimé avec succès.`);
                 setPatients(patients.filter((patient) => patient.id !== id));
             }else {
-                console.log('error');
                 setError(`Une erreur est survenue lors de la suppression du patient : ${response.data.msg}`);
             }
         });
@@ -90,6 +88,7 @@ const PatientsList = () => {
             </div>
 
             <h2>Tous les patients</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
             {message && <Alert variant="success">{message}</Alert>}
             <table className="table is-striped is-fullwidth">
                 <thead>

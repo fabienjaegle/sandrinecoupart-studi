@@ -12,7 +12,7 @@ export const getRecipes = async(req, res) => {
         });
         res.json(recipes);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -35,7 +35,7 @@ export const getRecipe = async(req, res) => {
 
         res.json(recipe);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -92,7 +92,7 @@ export const getExcerptPublicRecipies = async(req, res) => {
         });
         res.json(recipes);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -117,7 +117,7 @@ export const getExcerptPrivateRecipies = async(req, res) => {
 
         res.json(recipes);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -144,7 +144,7 @@ export const getFullPublicRecipe = async(req, res) => {
 
         res.json(recipe);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -167,10 +167,10 @@ export const getFullPrivateRecipe = async(req, res) => {
             replacements: { userId: userid, recipeId: recipeid },
             type: QueryTypes.SELECT
         });
-console.log(recipe);
+
         res.json(recipe);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -194,6 +194,6 @@ export const postNewRecipes = async(req, res) => {
 
         res.json({msg: "Recette ajoutée avec succès"});
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }

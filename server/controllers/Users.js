@@ -13,7 +13,7 @@ export const getUsers = async(req, res) => {
         });
         res.json(users);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -27,7 +27,7 @@ export const getPatients = async(req, res) => {
         });
         res.json(users);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -51,7 +51,7 @@ export const getPatient = async(req, res) => {
 
         res.json(user);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -91,13 +91,12 @@ export const updatePatient = async(req, res) => {
 }
 
 export const deletePatient = async(req, res) => {
-console.log(req.params.id);
+
     try {
         const count = await Users.destroy({ where: {id: req.params.id }});
 
         res.json(count);
     } catch (error) {
-        console.log(error);
         res.status(500).json({msg: error});
     }
 }

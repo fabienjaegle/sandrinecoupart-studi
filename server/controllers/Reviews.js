@@ -14,7 +14,7 @@ export const getReviews = async(req, res) => {
 
         res.json(reviews);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -29,13 +29,13 @@ export const getGlobalRate = async(req, res) => {
         });
         res.json({globalRate: reviewCount[0].globalRate});
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
 export const postNewReview = async(req, res) => {
     const { name, comment, rate, recipeid } = req.body;
-    console.log(req.body);
+
     try {
         const newReview = await Reviews.create({
             name,
@@ -46,6 +46,6 @@ export const postNewReview = async(req, res) => {
 
         res.json({newReview: newReview, msg: "Avis ajouté avec succès"});
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
