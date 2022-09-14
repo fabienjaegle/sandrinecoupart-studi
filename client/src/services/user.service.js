@@ -50,6 +50,9 @@ const updateRecipe = (values) => {
     diets: values.diets
   })
 }
+const deleteRecipe = (id) => {
+  return api.delete(`/recipes/delete/${id}`);
+}
 const postNewUser = (values) => {
   return api.post("/user", {
     lastname: values.lastname,
@@ -87,6 +90,7 @@ const UserService = {
   getRecipes,
   getRecipe,
   updateRecipe,
+  deleteRecipe,
   postNewUser,
   postNewReview,
   postNewContact

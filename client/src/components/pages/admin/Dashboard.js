@@ -48,7 +48,7 @@ const Dashboard = () => {
 
     return (
         <div className="container mt-5">
-            <h1>Bonjour, {currentUser?.lastname} {currentUser?.firstname}</h1>
+            <h1>Bonjour, {currentUser?.firstname} {currentUser?.lastname}</h1>
             <div className="d-flex gap-3 mb-3">
                 <div className="justify-content-start gap-3 mb-3">
                     <button onClick={returnFront} className="button is-info">Retour au site</button>

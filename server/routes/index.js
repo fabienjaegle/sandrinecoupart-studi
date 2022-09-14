@@ -1,7 +1,7 @@
 import express from "express";
 import { getUsers, Login, Logout, postNewUser, getPatients, getPatient, updatePatient, deletePatient } from "../controllers/Users.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
-import { getRecipes, getExcerptPublicRecipies, getFullPublicRecipe, postNewRecipes, getExcerptPrivateRecipies, getFullPrivateRecipe, getRecipe, updateRecipe } from "../controllers/Recipes.js";
+import { getRecipes, getExcerptPublicRecipies, getFullPublicRecipe, postNewRecipes, getExcerptPrivateRecipies, getFullPrivateRecipe, getRecipe, updateRecipe, deleteRecipe } from "../controllers/Recipes.js";
 import { getGlobalRate, getReviews, postNewReview } from "../controllers/Reviews.js";
 import { getAllergens } from "../controllers/Allergens.js";
 import { getDiets } from "../controllers/Diets.js";
@@ -19,6 +19,7 @@ router.post('/user', postNewUser);
 router.get('/recipes', getRecipes);
 router.get('/recipes/:id', getRecipe);
 router.put('/recipes/update', updateRecipe);
+router.delete('/recipes/delete/:id', deleteRecipe);
 router.get('/recipes/public/excerpt', getExcerptPublicRecipies);
 router.post('/recipes/public/full', getFullPublicRecipe);
 router.post('/recipes/private/excerpt', getExcerptPrivateRecipies);

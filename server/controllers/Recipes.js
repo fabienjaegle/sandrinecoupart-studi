@@ -78,6 +78,16 @@ export const updateRecipe = async(req, res) => {
     }
 }
 
+export const deleteRecipe = async(req, res) => {
+    try {
+        const count = await Recipes.destroy({ where: {id: req.params.id }});
+
+        res.json(count);
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
 export const getExcerptPublicRecipies = async(req, res) => {
     try {
         const recipes = await Recipes.findAll({
