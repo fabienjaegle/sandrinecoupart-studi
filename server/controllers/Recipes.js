@@ -88,6 +88,31 @@ export const deleteRecipe = async(req, res) => {
     }
 }
 
+export const postNewRecipe = async(req, res) => {
+    const { title, description, ingredients, directions, prepTimeInMinutes, cookTimeInMinutes, restTimeInMinutes, forPatient, allergens, diets } = req.body;
+
+    try {
+        const recipe = await Recipes.create({
+            title: title,
+            description: description,
+            ingredients: ingredients,
+            directions: directions,
+            prepTimeInMinutes: prepTimeInMinutes,
+            cookTimeInMinutes: cookTimeInMinutes,
+            restTimeInMinutes: restTimeInMinutes,
+            forPatient: forPatient,
+            publishedDate: Date.now()
+        });
+        
+        recipe.setAllergens(allergens);
+        recipe.setDiets(diets);
+
+        res.json({msg: "Recette créée avec succès"});
+    } catch (error) {
+        res.json({msg: error});
+    }
+}
+
 export const getExcerptPublicRecipies = async(req, res) => {
     try {
         const recipes = await Recipes.findAll({
@@ -179,30 +204,6 @@ export const getFullPrivateRecipe = async(req, res) => {
         });
 
         res.json(recipe);
-    } catch (error) {
-        res.status(500).json({msg: error});
-    }
-}
-
-export const postNewRecipes = async(req, res) => {
-    const { title, featuredImage, description, ingredients, directions, prepTimeInMinutes, restTimeInMinutes, cookTimeInMinutes, forPatient, allergens } = req.body;
-
-    try {
-        await Recipes.create({
-            title: title,
-            featuredImage: featuredImage,
-            description: description,
-            ingredients: ingredients,
-            directions: directions,
-            prepTimeInMinutes: prepTimeInMinutes,
-            restTimeInMinutes: restTimeInMinutes,
-            cookTimeInMinutes: cookTimeInMinutes,
-            forPatient: forPatient,
-        }).then(function(createdRecipe) {
-            return createdRecipe.setRecipeAllergens(allergens);
-        });
-
-        res.json({msg: "Recette ajoutée avec succès"});
     } catch (error) {
         res.status(500).json({msg: error});
     }

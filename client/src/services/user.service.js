@@ -66,6 +66,20 @@ const postNewUser = (values) => {
     diets: values.diets
   });
 }
+const postNewRecipe = (values) => {
+  return api.post("/recipes", {
+    title: values.title,
+    description: values.description,
+    ingredients: values.ingredients,
+    directions: values.directions,
+    prepTimeInMinutes: values.prepTimeInMinutes,
+    cookTimeInMinutes: values.cookTimeInMinutes,
+    restTimeInMinutes: values.restTimeInMinutes,
+    forPatient: values.forPatient,
+    allergens: values.allergens,
+    diets: values.diets
+  })
+}
 const postNewReview = (values) => {
   return api.post("/review", {
     name: values.name,
@@ -92,6 +106,7 @@ const UserService = {
   updateRecipe,
   deleteRecipe,
   postNewUser,
+  postNewRecipe,
   postNewReview,
   postNewContact
 };
