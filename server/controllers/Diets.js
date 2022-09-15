@@ -7,6 +7,6 @@ export const getDiets = async(req, res) => {
         });
         res.json(diets);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }

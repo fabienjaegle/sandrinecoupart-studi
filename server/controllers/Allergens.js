@@ -7,6 +7,6 @@ export const getAllergens = async(req, res) => {
         });
         res.json(allergens);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }

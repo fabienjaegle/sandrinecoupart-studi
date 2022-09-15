@@ -23,6 +23,6 @@ export const refreshToken = async(req, res) => {
             res.json({ accessToken });
         });
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }

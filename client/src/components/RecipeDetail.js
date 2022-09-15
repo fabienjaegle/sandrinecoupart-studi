@@ -10,7 +10,6 @@ import UserService from "../services/user.service";
 import instance from "../services/api";
 
 class RecipeDetail extends Component {
-
     constructor(props) {
         super(props);
 
@@ -29,11 +28,13 @@ class RecipeDetail extends Component {
     validationSchema = Yup.object({
         name: Yup.string().required('Veuillez entrer votre nom'),
         comment: Yup.string().required('Veuillez entrer votre avis'),
-        rate: Yup.number().integer()
-        .required()
-        .test(
-            'Is positive?', 
-            'Veuillez choisir une note', (value) => value > 0
+        rate: Yup.number()
+            .required()
+            .test('Is positive?', 'Veuillez choisir une note', () => {
+                var value = $('i.icofont-star.star').length;
+                
+                return value > 0;
+            } 
         ),
     });
 
@@ -52,7 +53,7 @@ class RecipeDetail extends Component {
         $("#rating li").on('mouseover', function(){
             var onStar = parseInt($(this).data('value'), 10);
             var siblings = $(this).parent().children('li.star');
-            Array.from(siblings, function(item) {
+            Array.from(siblings, (item) => {
                 var value = item.dataset.value;
                 var child = item.firstChild;
                 if(value <= onStar) {
@@ -65,26 +66,24 @@ class RecipeDetail extends Component {
 
         $("#rating").on('mouseleave', function(){
             var child = $(this).find('li.star i');
-            Array.from(child, function(item) {
+            Array.from(child, (item) => {
                 item.classList.remove('hover');
             })
         })
     
-        var that = this;
         $('#rating li').on('click', function(e) {
             var onStar = parseInt($(this).data('value'), 10);
-            that.initialValues.rate = onStar;
-            that.setState({rate: onStar });
+            $('#rate').val(onStar);
             var siblings = $(this).parent().children('li.star');
-            Array.from(siblings, function(item) {
+            Array.from(siblings, (item) => {
                 var value = item.dataset.value;
                 var child = item.firstChild;
                 if(value <= onStar) {
                     child.classList.remove('hover', 'hover');
-                    child.classList.add('star')
+                    child.classList.add('star');
                 } else {
                     child.classList.remove('star');
-                    child.classList.add('hover')
+                    child.classList.add('hover');
                 }
             })
         })
@@ -93,11 +92,13 @@ class RecipeDetail extends Component {
     initialValues = {
         name: "",
         comment: "",
-        rate : 0,
+        rate: 0,
         recipeid: this.props.id
-      };
+    };
 
     addReview = (values, resetForm) => {
+        values.rate = $('i.icofont-star.star').length;
+
         UserService.postNewReview(values)
         .then((response) => {
             if (response.status === 200) {
@@ -238,7 +239,7 @@ class RecipeDetail extends Component {
                                                                 initialValues={this.initialValues}
                                                                 validationSchema={this.validationSchema}
                                                                 onSubmit={(values, {resetForm}) => this.addReview(values, resetForm)}>
-                                                                {({ resetForm, values }) => (
+                                                                {() => (
                                                                     <Form>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
@@ -250,13 +251,14 @@ class RecipeDetail extends Component {
                                                                             <div className="col-md-6">
                                                                                 <div className="reviews-rating">
                                                                                     <label>Votre note</label>
-                                                                                    <ul id="rating" className="rating">
+                                                                                    <ul id="rating" name="rating" className="rating">
                                                                                         <li className="star" title="Horrible" data-value="1"><i className="icofont-star"></i></li>
                                                                                         <li className="star" title="Pas bon" data-value="2"><i className="icofont-star"></i></li>
                                                                                         <li className="star" title="Moyen" data-value="3"><i className="icofont-star"></i></li>
                                                                                         <li className="star" title="Très bon" data-value="4"><i className="icofont-star"></i></li>
                                                                                         <li className="star" title="Excellent" data-value="5"><i className="icofont-star"></i></li>
                                                                                     </ul>
+                                                                                    <input type="hidden" id="rate" name="rate" value="0" />
                                                                                     <ErrorMessage name="rate" component="small" className="text-danger" />
                                                                                 </div>
                                                                             </div>

@@ -13,6 +13,6 @@ export const postNewContact = async(req, res) => {
 
         res.json({msg: "Contact ajouté avec succès"});
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }

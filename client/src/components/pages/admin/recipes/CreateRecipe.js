@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Formik, Field, FieldArray, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import "bootstrap/dist/css/bootstrap.css";
-import UserService from "../../../services/user.service";
+import UserService from "../../../../services/user.service";
 
 const CreateRecipe = () => {
     const validationSchema = Yup.object().shape({
@@ -66,16 +66,6 @@ const CreateRecipe = () => {
             <div className="row">
                 <div className="col-md-6 offset-md-3 pt-3">
                     <h1 className="text-center">Créer une recette</h1>
-                    {info ? 
-                        <div class="alert alert-success" role="alert">
-                        {info}
-                        </div> : ''
-                    }
-                    {error ? 
-                        <div class="alert alert-danger" role="alert">
-                        {error}
-                        </div> : ''
-                    }
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
@@ -251,7 +241,7 @@ const CreateRecipe = () => {
                                                         }
                                                     }}
                                                     />
-                                                    <span>{allergen.allergen}</span>
+                                                    <span>&nbsp;{allergen.allergen}</span>
                                                 </label>
                                                 ))}
                                             </div>
@@ -282,7 +272,7 @@ const CreateRecipe = () => {
                                                         }
                                                     }}
                                                     />
-                                                    <span>{diet.diet}</span>
+                                                    <span>&nbsp;{diet.diet}</span>
                                                 </label>
                                                 ))}
                                             </div>
@@ -291,8 +281,18 @@ const CreateRecipe = () => {
                                         <ErrorMessage name="diets" component="small" className="text-danger" />
                                     </div>
                                 </div>
+                                {info ? 
+                                    <div className="alert alert-success" role="alert">
+                                    {info}
+                                    </div> : ''
+                                }
+                                {error ? 
+                                    <div className="alert alert-danger" role="alert">
+                                    {error}
+                                    </div> : ''
+                                }
                                 <div className="form-group d-flex justify-content-end gap-3 mb-3">
-                                    <a className="btn btn-light" href="/admin">Retour</a>
+                                    <a className="btn btn-light" href="/admin/recipes/list">Retour</a>
                                     <button type="submit" className="btn btn-secondary">Créer</button>
                                     <button type="button" onClick={resetForm} className="btn btn-primary">Reset</button>
                                 </div>

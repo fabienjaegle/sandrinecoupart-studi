@@ -2,6 +2,8 @@ import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import Allergens from "../models/AllergenModel.js";
+import Diets from "../models/DietModel.js";
 dotenv.config();
 
 export const getUsers = async(req, res) => {
@@ -11,7 +13,91 @@ export const getUsers = async(req, res) => {
         });
         res.json(users);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
+    }
+}
+
+export const getPatients = async(req, res) => {
+    try {
+        const users = await Users.findAll({
+            attributes:['id','lastname', 'firstname', 'username'],
+            where: {
+                isPatient: true
+            }
+        });
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
+export const getPatient = async(req, res) => {
+
+    try {
+        const user = await Users.findOne({
+            attributes: ['lastname', 'firstname', 'username', 'email'],
+            include: [{ 
+                model: Allergens,
+                through: { attributes: []}
+              }, {
+                model: Diets,
+                through: { attributes: []}
+            }],
+            where: {
+                isPatient: true,
+                id: req.params.id
+            }
+        });
+
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
+export const updatePatient = async(req, res) => {
+    const { lastname, firstname, email, username, allergens, diets } = req.body;
+
+    try {        
+        const user = await Users.findOne({
+            include: [{ 
+                model: Allergens,
+                through: { attributes: []}
+              }, {
+                model: Diets,
+                through: { attributes: []}
+            }],
+            where: {
+                username: username
+            }
+        });
+
+        if (user) {
+            user.lastname = lastname,
+            user.firstname = firstname,
+            user.email = email,
+            user.username = username,
+            user.setAllergens(allergens.map(a => a.id));
+            user.setDiets(diets.map(d => d.id));
+            await user.save();
+
+            res.json({msg: "Patient mis à jour avec succès"});
+        }else {
+            res.status(400).json({msg: "Une erreur est survenue lors de la mise à jour du patient"});
+        }
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
+export const deletePatient = async(req, res) => {
+
+    try {
+        const count = await Users.destroy({ where: {id: req.params.id }});
+
+        res.json(count);
+    } catch (error) {
+        res.status(500).json({msg: error});
     }
 }
 

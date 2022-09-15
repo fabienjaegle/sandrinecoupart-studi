@@ -19,6 +19,8 @@ DBHOST='localhost'
 DATABASE='databasename'
 DBUSERNAME='root'
 DBPASSWORD='password'
+REFRESH_TOKEN_SECRET='abcdefghij'
+ACCESS_TOKEN_SECRET='abcdefghijklm'
 PORT=5000
 ```
 Exécutez le script SQL contenu dans le dossier `server\db\scoupart.sql`.

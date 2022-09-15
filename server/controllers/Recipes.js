@@ -5,6 +5,114 @@ import Diets from "../models/DietModel.js";
 import db from "../config/Database.js";
 import { QueryTypes } from "sequelize";
 
+export const getRecipes = async(req, res) => {
+    try {
+        const recipes = await Recipes.findAll({
+            attributes:['id', 'title', 'prepTimeInMinutes', 'cookTimeInMinutes', 'restTimeInMinutes', 'publishedDate', 'forPatient'],
+        });
+        res.json(recipes);
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
+export const getRecipe = async(req, res) => {
+
+    try {
+        const recipe = await Recipes.findOne({
+            attributes:['id', 'title', 'description', 'ingredients', 'directions', 'prepTimeInMinutes', 'cookTimeInMinutes', 'restTimeInMinutes', 'publishedDate', 'forPatient'],
+            include: [{ 
+                model: Allergens,
+                through: { attributes: []}
+              }, {
+                model: Diets,
+                through: { attributes: []}
+            }],
+            where: {
+                id: req.params.id
+            }
+        });
+
+        res.json(recipe);
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
+export const updateRecipe = async(req, res) => {
+    const { id, title, description, ingredients, directions, prepTimeInMinutes, cookTimeInMinutes, restTimeInMinutes, forPatient, allergens, diets } = req.body;
+
+    try {        
+        const recipe = await Recipes.findOne({
+            include: [{ 
+                model: Allergens,
+                through: { attributes: []}
+              }, {
+                model: Diets,
+                through: { attributes: []}
+            }],
+            where: {
+                id: id
+            }
+        });
+
+        if (recipe) {
+            recipe.title = title,
+            recipe.description = description,
+            recipe.ingredients = ingredients,
+            recipe.directions = directions,
+            recipe.prepTimeInMinutes = prepTimeInMinutes,
+            recipe.cookTimeInMinutes = cookTimeInMinutes,
+            recipe.restTimeInMinutes = restTimeInMinutes,
+            recipe.forPatient = forPatient,
+            recipe.setAllergens(allergens.map(a => a.id));
+            recipe.setDiets(diets.map(d => d.id));
+            await recipe.save();
+
+            res.json({msg: "Recette mise à jour avec succès"});
+        }else {
+            res.status(400).json({msg: "Une erreur est survenue lors de la mise à jour de la recette"});
+        }
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
+export const deleteRecipe = async(req, res) => {
+    try {
+        const count = await Recipes.destroy({ where: {id: req.params.id }});
+
+        res.json(count);
+    } catch (error) {
+        res.status(500).json({msg: error});
+    }
+}
+
+export const postNewRecipe = async(req, res) => {
+    const { title, description, ingredients, directions, prepTimeInMinutes, cookTimeInMinutes, restTimeInMinutes, forPatient, allergens, diets } = req.body;
+
+    try {
+        const recipe = await Recipes.create({
+            title: title,
+            description: description,
+            ingredients: ingredients,
+            directions: directions,
+            prepTimeInMinutes: prepTimeInMinutes,
+            cookTimeInMinutes: cookTimeInMinutes,
+            restTimeInMinutes: restTimeInMinutes,
+            forPatient: forPatient,
+            publishedDate: Date.now()
+        });
+        
+        recipe.setAllergens(allergens);
+        recipe.setDiets(diets);
+
+        res.json({msg: "Recette créée avec succès"});
+    } catch (error) {
+        res.json({msg: error});
+    }
+}
+
 export const getExcerptPublicRecipies = async(req, res) => {
     try {
         const recipes = await Recipes.findAll({
@@ -19,7 +127,7 @@ export const getExcerptPublicRecipies = async(req, res) => {
         });
         res.json(recipes);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -44,7 +152,7 @@ export const getExcerptPrivateRecipies = async(req, res) => {
 
         res.json(recipes);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -61,7 +169,7 @@ export const getFullPublicRecipe = async(req, res) => {
                 through: { attributes: []}
             }, {
                 model: Diets,
-                trough: { attributes: []}
+                through: { attributes: []}
             }],
             where: {
                 id: recipeid,
@@ -71,7 +179,7 @@ export const getFullPublicRecipe = async(req, res) => {
 
         res.json(recipe);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
 
@@ -94,33 +202,9 @@ export const getFullPrivateRecipe = async(req, res) => {
             replacements: { userId: userid, recipeId: recipeid },
             type: QueryTypes.SELECT
         });
-console.log(recipe);
+
         res.json(recipe);
     } catch (error) {
-        console.log(error);
-    }
-}
-
-export const postNewRecipes = async(req, res) => {
-    const { title, featuredImage, description, ingredients, directions, prepTimeInMinutes, restTimeInMinutes, cookTimeInMinutes, forPatient, allergens } = req.body;
-
-    try {
-        await Recipes.create({
-            title: title,
-            featuredImage: featuredImage,
-            description: description,
-            ingredients: ingredients,
-            directions: directions,
-            prepTimeInMinutes: prepTimeInMinutes,
-            restTimeInMinutes: restTimeInMinutes,
-            cookTimeInMinutes: cookTimeInMinutes,
-            forPatient: forPatient,
-        }).then(function(createdRecipe) {
-            return createdRecipe.setRecipeAllergens(allergens);
-        });
-
-        res.json({msg: "Recette ajoutée avec succès"});
-    } catch (error) {
-        console.log(error);
+        res.status(500).json({msg: error});
     }
 }
