@@ -61,13 +61,11 @@ const RecipesList = () => {
     };
 
     const submitDelete = (id) => {
-        console.log(id);
         UserService.deleteRecipe(id).then(response => {
             if (response.status === 200) {
                 setMessage(`La recette '${recipes.find((x) => x.id === id).title}' a été supprimée avec succès.`);
                 setRecipes(recipes.filter((recipe) => recipe.id !== id));
             }else {
-                console.log('error');
                 setError(`Une erreur est survenue lors de la suppression de la recette : ${response.data.msg}`);
             }
         });
